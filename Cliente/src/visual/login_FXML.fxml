@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="307.0" prefWidth="235.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controler.C_Login_FXML">
+   <children>
+      <ImageView fitHeight="311.0" fitWidth="275.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/fondo_login.png" />
+         </image>
+      </ImageView>
+      <PasswordField layoutX="10.0" layoutY="252.0" promptText="Password" />
+      <TextField layoutX="9.0" layoutY="208.0" />
+   </children>
+</AnchorPane>
