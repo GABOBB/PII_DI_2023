@@ -36,14 +36,14 @@ public class Cliente extends Application {
             Scene scene = new Scene(ventana);
             pstage.setScene(scene);
             C_Login_FXML c = loader.getController();
-            //c.setStage(pstage);
+            c.setStage(pstage);
             pstage.show();
-            this.send("hola");
+            this.send("hola server");
         }catch(IOException e){
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText(null);
             a.setTitle("Error");
-            a.setContentText("error cargando la ventana");
+            a.setContentText("Error cargando la ventana");
             a.showAndWait();  
             
             System.err.println(e);
@@ -72,7 +72,7 @@ public class Cliente extends Application {
             out.writeUTF(a);
 
             String message = in.readUTF();
-            System.out.println(message+"1");
+            System.out.println("I recieve: "+message+"1");
             
 
             clientSocket.close();

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this template
+-->
+
+
+
+<root>
+    <client>
+        <user>Client1</user>
+        <password>4321</password>
+    </client>
+    <client>
+        <user>Client2</user>
+        <password>5678</password>
+    </client>
+</root>
+

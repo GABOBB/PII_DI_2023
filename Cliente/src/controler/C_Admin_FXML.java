@@ -22,7 +22,7 @@ public class C_Admin_FXML implements Initializable {
     }    
 
     void closeTab() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
     
     public void set_stage(Stage e){this.stg = e;}
