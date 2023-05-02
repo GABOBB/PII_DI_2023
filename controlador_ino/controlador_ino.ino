@@ -4,89 +4,47 @@ bool M[10][8]={ {1,1,1,0,1,1,1,0},{0,0,1,0,0,1,0,0},
                 {1,1,0,1,1,1,1,0},{1,0,1,0,0,1,0,0},
                 {1,1,1,1,1,1,1,0},{1,1,1,1,0,1,1,0}};
 
-const int sndP;
-const int led25;
-const int led50;
-const int led75;
-const int led100;
+int bzzr = A0;
 
-int d_num = 0;
-const int dataP = 0;
-const int clock = 0;
-const int latch = 0;
+int data =12;//red
+int latch = 11;//rallado
+int clock = 10;//blue
+
+int led25 = 2;
+int led50 = 3;
+int led75 = 4;
+int led10 = 5;
+//int 
 
 void setup() {
-  pinMode(sndP,OUTPUT);
+  pinMode(data,OUTPUT);
+  pinMode(latch, OUTPUT);
+  pinMode(clock,OUTPUT);
+  pinMode(bzzr, OUTPUT);
   pinMode(led25,OUTPUT);
   pinMode(led50,OUTPUT);
   pinMode(led75,OUTPUT);
-  pinMode(led100,OUTPUT);
+  pinMode(led10,OUTPUT);
 
-  pinMode(dataP,OUTPUT);
-  pinMode(clock,OUTPUT);
-  pinMode(latch,OUTPUT);
 
 }
 
 void loop() {
-  s_r();
-  delay(500);
-
+  //sound(300);
+  digitalWrite(latch,LOW);
+  
+  shiftOut(data,clock,LSBFIRST, B11011110);
+  shiftOut(data,clock,LSBFIRST, B11101010);
+  
+  digitalWrite(latch,HIGH);
+  delay(1000);
 }
 
-void s_r(){
-  if(Serial.available()>0){ //leer si tiene datos en el monitor serial
-    String data = Serial.readString();
-    Serial.print(" I receive: ");
-    Serial.println(data);
-    compareIncoming(data);
-    }
-  }
+void sound(int n){
+  tone(bzzr,n);
+  delay(500);
+  noTone(bzzr);
 
-
-void compareIncoming(String data){
-  if(data == "r"){
-    digitalWrite(led100,HIGH);
-    d_num--;
-    int p = d_num / 10;
-    int s = d_num % 10;
-    digitalWrite(latch, LOW);
-    shiftOut(dataP, clock, LSBFIRST, translater(M[p]));
-    shiftOut(dataP, clock, LSBFIRST, translater(M[s]));
-    digitalWrite(latch,HIGH);
-    tone(sndP,120);
-    delay(300);
-    noTone(sndP);
-    delay(80);
-    digitalWrite(led25,LOW);
-    digitalWrite(led50,LOW);
-    digitalWrite(led75,LOW);
-    digitalWrite(led100,LOW);
-  }else if(data == "a"){
-    
-    d_num++;
-    int p = d_num / 10;
-    int s = d_num % 10;
-    digitalWrite(latch, LOW);
-    shiftOut(dataP, clock, LSBFIRST, translater(M[p]));
-    shiftOut(dataP, clock, LSBFIRST, translater(M[s]));
-    digitalWrite(latch,HIGH);
-    tone(sndP,220);
-    delay(300);
-    noTone(sndP);
-    
-  }else if(data == "25"){
-
-    digitalWrite(led25,HIGH);
-
-  }else if(data == "50"){
-
-    digitalWrite(led50,HIGH);
-
-  }else if(data == "75"){
-
-    digitalWrite(led75,HIGH);
-  }
 }
 
 uint8_t translater(bool ary[]){

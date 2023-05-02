@@ -1,7 +1,10 @@
 package controler;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,7 +37,7 @@ public class C_Login_FXML implements Initializable {
         // TODO
     }    
     
-    private void load_c() throws Exception {
+    private void load_c() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/visual/client_FXML.fxml"));
         
         Parent root = loader.load();
@@ -44,6 +47,7 @@ public class C_Login_FXML implements Initializable {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
          
+        controlador.set_stage(stage);
         
         stage.setScene(scene);
         
@@ -54,23 +58,27 @@ public class C_Login_FXML implements Initializable {
         this.stg.close();
     }
     
-    private void load_a() throws Exception {
+    private void load_a() throws IOException {
+      
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/visual/admin_FXML.fxml"));
-        
+
         Parent root = loader.load();
-        
+
         C_Admin_FXML controlador = loader.getController();
-        
+
         Scene scene = new Scene(root);
         Stage stage = new Stage();
-        
+
+        controlador.set_stage(stage);
+
         stage.setScene(scene);
-        
+
         stage.show();
-        
+
         stage.setOnCloseRequest(e -> controlador.closeTab());
-        
+
         this.stg.close();
+        
     }
     
     public void set_stage(Stage e){this.stg = e;}
