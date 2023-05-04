@@ -14,7 +14,7 @@ int led25 = 2;
 int led50 = 3;
 int led75 = 4;
 int led10 = 5;
-//int 
+
 
 void setup() {
   pinMode(data,OUTPUT);
@@ -26,9 +26,11 @@ void setup() {
   pinMode(led75,OUTPUT);
   pinMode(led10,OUTPUT);
 
+  Serial. begin(9600);
 }
 
 void loop() {
+  serial();
   //sound(300);
   digitalWrite(latch,LOW);
   //shiftOut(data,clock,LSBFIRST, M[9]);
@@ -50,7 +52,52 @@ void loop() {
   digitalWrite(led10,HIGH);
 
   delay(1000);
+} 
+
+void set_num(int x, int y){
+  digitalWrite(latch,LOW);
+  shiftOut(data,clock,LSBFIRST, M[y]);
+  shiftOut(data,clock,LSBFIRST, M[x]);
+  digitalWrite(latch,HIGH);
 }
+
+void compareIndcoming(String data){
+  const char* aux = data.c_str();
+  const char* result = strstr(aux, "N");
+  if(result != NULL){
+    int x = data.charAt(1);
+    int y = data.charAt(2);
+    set_num(x,y);
+  }else if(data=="s1"){
+    sound(300);
+  }else if(data=="s2"){
+    sound(200);
+  }else{
+    if(data == "25"){
+      digitalWrite(led25,HIGH);
+      digitalWrite(led50,LOW);
+      digitalWrite(led75,LOW);
+      digitalWrite(led10,LOW);
+    }else if(data == "50"){
+      digitalWrite(led25,HIGH);
+      digitalWrite(led50,HIGH);
+      digitalWrite(led75,LOW);
+      digitalWrite(led10,LOW);
+    }else if(data == "75"){
+      digitalWrite(led25,HIGH);
+      digitalWrite(led50,HIGH);
+      digitalWrite(led75,HIGH);
+      digitalWrite(led10,LOW);
+    }else if(data == "100"){
+      digitalWrite(led25,HIGH);
+      digitalWrite(led50,HIGH);
+      digitalWrite(led75,HIGH);
+      digitalWrite(led10,HIGH);
+    }
+     
+  }
+}
+
 
 void sound(int n){
   tone(bzzr,n);
@@ -58,5 +105,18 @@ void sound(int n){
   noTone(bzzr);
 
 }
+void serial(){
+  if(Serial.available()>0){ //leer si tiene datos en el monitor serial
+    String data = Serial.readString();
+    Serial.print(" I receive: ");
+    Serial.println(data);
+    compareIndcoming(data);
+    }
+
+}
+
+
+
+
 
 
