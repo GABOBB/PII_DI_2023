@@ -75,10 +75,10 @@ public class Servidor {
     
     private void load_Clnts(){
         try{
-            File admins= new File("src/main/java/com/mycompany/servidor/Clientes.xml");
+            File clientes = new File("src/main/java/com/mycompany/servidor/Clientes.xml");
             DocumentBuilderFactory dBF = DocumentBuilderFactory.newInstance();
             DocumentBuilder dB= dBF.newDocumentBuilder();
-            Document doc = dB.parse(admins);
+            Document doc = dB.parse(clientes);
             doc.getDocumentElement().normalize();
             
             NodeList nL = doc.getElementsByTagName("client");
@@ -146,16 +146,28 @@ public class Servidor {
     }
     
     public boolean buscarAdmin(String user, String password){
-        try {
+        N_B_B temp = this.admns.srch_id(user);
+        if(temp == null){
+            return false;
+        }else{
+            Element element = (Element) temp.getData();
+            if(password.equals(element.getElementsByTagName("password").item(0).getTextContent())){
+                return true;
+            }else{
+                return false;
+            }
+            
+        }
+        /*try{
             File admins= new File("src/main/java/com/mycompany/servidor/Admins.xml");
             DocumentBuilderFactory dBF = DocumentBuilderFactory.newInstance();
             DocumentBuilder dB= dBF.newDocumentBuilder();
             Document doc = dB.parse(admins);
             doc.getDocumentElement().normalize();
-            
+
             NodeList nL = doc.getElementsByTagName("admin");
             for(int i =0; i<nL.getLength();i++){
-                Node node = nL.item(i);
+            Node node = nL.item(i);
                 if(node.getNodeType()==Node.ELEMENT_NODE){
                     Element element =(Element)node;
                     if(user.equals(element.getElementsByTagName("user").item(0).getTextContent())){
@@ -169,37 +181,51 @@ public class Servidor {
             }
             return false;
         } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
+        System.out.println(e);
+        return false;
+        }*/
     }
     
     public boolean buscarCliente(String user, String password){
-        try {
-            File clientes= new File("src/main/java/com/mycompany/servidor/Clientes.xml");
-            DocumentBuilderFactory dBF = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dB= dBF.newDocumentBuilder();
-            Document doc = dB.parse(clientes);
-            doc.getDocumentElement().normalize();
-            
-            NodeList nL = doc.getElementsByTagName("client");
-            for(int i =0; i<nL.getLength();i++){
-                Node node = nL.item(i);
-                if(node.getNodeType()==Node.ELEMENT_NODE){
-                    Element element =(Element)node;
-                    if(user.equals(element.getElementsByTagName("user").item(0).getTextContent())){
-                        if(password.equals(element.getElementsByTagName("password").item(0).getTextContent())){
-                            return true;
-                        }else{
-                            return false;
-                        }
-                    }
-                }
+        
+        N_B_B temp = this.clnts.srch_id(user);
+        if(temp == null){
+            return false;
+        }else{
+            Element element = (Element) temp.getData();
+            if(password.equals(element.getElementsByTagName("password").item(0).getTextContent())){
+                return true;
+            }else{
+                return false;
             }
-            return false;
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
+            
         }
+        
+        /*try {
+        File clientes= new File("src/main/java/com/mycompany/servidor/Clientes.xml");
+        DocumentBuilderFactory dBF = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dB= dBF.newDocumentBuilder();
+        Document doc = dB.parse(clientes);
+        doc.getDocumentElement().normalize();
+        
+        NodeList nL = doc.getElementsByTagName("client");
+        for(int i =0; i<nL.getLength();i++){
+        Node node = nL.item(i);
+        if(node.getNodeType()==Node.ELEMENT_NODE){
+        Element element =(Element)node;
+        if(user.equals(element.getElementsByTagName("user").item(0).getTextContent())){
+        if(password.equals(element.getElementsByTagName("password").item(0).getTextContent())){
+        return true;
+        }else{
+        return false;
+        }
+        }
+        }
+        }
+        return false;
+        } catch (Exception e) {
+        System.out.println(e);
+        return false;
+        }*/
     }
 }

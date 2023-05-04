@@ -56,12 +56,16 @@ public class A_B_B {
     public N_B_B srch_id(String id){
         if(this.first == null){
             
-            return null;
+            return this.first;
             
         }else{
             N_B_B act = this.first;
             while(true){
-                if(id.compareTo(act.getId()) < 0){
+                if(act == null){
+                    
+                    return act;
+                    
+                }else if(id.compareTo(act.getId()) < 0){
                     
                     act = act.getLt();
                     
