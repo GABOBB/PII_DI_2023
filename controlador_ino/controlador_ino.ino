@@ -1,8 +1,8 @@
-bool M[10][8]={ {1,1,1,0,1,1,1,0},{0,0,1,0,0,1,0,0},
-                {1,0,1,1,1,0,1,0},{1,0,1,1,0,1,1,0},
-                {0,1,1,1,0,1,0,0},{1,1,0,1,0,1,1,0},
-                {1,1,0,1,1,1,1,0},{1,0,1,0,0,1,0,0},
-                {1,1,1,1,1,1,1,0},{1,1,1,1,0,1,1,0}};
+uint8_t M[10]={ B10111110,B00100100,
+                B11101010,B11100110,
+                B01110100,B11010110,
+                B11011110,B10100100,
+                B11111110,B11110110};
 
 int bzzr = A0;
 
@@ -26,17 +26,29 @@ void setup() {
   pinMode(led75,OUTPUT);
   pinMode(led10,OUTPUT);
 
-
 }
 
 void loop() {
   //sound(300);
   digitalWrite(latch,LOW);
-  
-  shiftOut(data,clock,LSBFIRST, B11011110);
-  shiftOut(data,clock,LSBFIRST, B11101010);
-  
+  //shiftOut(data,clock,LSBFIRST, M[9]);
+  //shiftOut(data,clock,LSBFIRST, M[8]);
+  //shiftOut(data,clock,LSBFIRST, M[7]);
+  shiftOut(data,clock,LSBFIRST, M[6]);
+  //shiftOut(data,clock,LSBFIRST, M[5]);
+  //shiftOut(data,clock,LSBFIRST, M[4]);
+  //shiftOut(data,clock,LSBFIRST, M[3]);
+  shiftOut(data,clock,LSBFIRST, M[2]); 
+  //shiftOut(data,clock,LSBFIRST, M[1]);
+  //shiftOut(data,clock,LSBFIRST, M[0]);
+
   digitalWrite(latch,HIGH);
+  
+  digitalWrite(led25,HIGH);
+  digitalWrite(led50,HIGH);
+  digitalWrite(led75,HIGH);
+  digitalWrite(led10,HIGH);
+
   delay(1000);
 }
 
@@ -47,13 +59,4 @@ void sound(int n){
 
 }
 
-uint8_t translater(bool ary[]){
-  uint8_t val = B00000000;
-  for(int x=0; x<8; x++){
-    val = val<<1;
-    if(ary[x] == HIGH){
-      val= val+B1;
-    }
-  }
-  return val;
-}
+
