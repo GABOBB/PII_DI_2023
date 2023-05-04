@@ -20,13 +20,25 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
+import model.A_B_B;
+import model.N_B_B;
 
 /**
  *
  * @author Gabriel
  */
 public class Servidor {
+    A_B_B admns;
+    A_B_B clnts;
     public Servidor(){
+        try {
+            this.admns = new A_B_B("admns");
+            this.clnts = new A_B_B("clnts");
+            load_Admins();
+            load_Clnts();
+        } catch (Exception e) {
+        
+        }
         try{
         
             this.on_server();
@@ -34,7 +46,56 @@ public class Servidor {
         }catch(IOException e){
             System.err.println(e);
         }
+        
     }
+    
+    private void load_Admins(){
+        try{
+            File admins= new File("src/main/java/com/mycompany/servidor/Admins.xml");
+            DocumentBuilderFactory dBF = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dB= dBF.newDocumentBuilder();
+            Document doc = dB.parse(admins);
+            doc.getDocumentElement().normalize();
+            
+            NodeList nL = doc.getElementsByTagName("admin");
+            for(int i =0; i<nL.getLength();i++){
+                Node node = nL.item(i);
+                if(node.getNodeType()==Node.ELEMENT_NODE){
+                    Element element =(Element)node;
+                    N_B_B new_n = new N_B_B(element.getElementsByTagName("user").item(0).getTextContent(),node);
+                    this.admns.add_N(new_n);
+                }
+            }
+            
+        }catch (Exception e) {
+            System.out.println(e);
+            return;
+        }
+    } 
+    
+    private void load_Clnts(){
+        try{
+            File admins= new File("src/main/java/com/mycompany/servidor/Clientes.xml");
+            DocumentBuilderFactory dBF = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dB= dBF.newDocumentBuilder();
+            Document doc = dB.parse(admins);
+            doc.getDocumentElement().normalize();
+            
+            NodeList nL = doc.getElementsByTagName("client");
+            for(int i =0; i<nL.getLength();i++){
+                Node node = nL.item(i);
+                if(node.getNodeType()==Node.ELEMENT_NODE){
+                    Element element =(Element)node;
+                    N_B_B new_n = new N_B_B(element.getElementsByTagName("user").item(0).getTextContent(),node);
+                    this.clnts.add_N(new_n);
+                }
+            }
+            
+        }catch (Exception e) {
+            System.out.println(e);
+            return;
+        }
+    } 
     
     public static void main(String[] args) {
         new Servidor();
@@ -83,6 +144,7 @@ public class Servidor {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, e);
         } 
     }
+    
     public boolean buscarAdmin(String user, String password){
         try {
             File admins= new File("src/main/java/com/mycompany/servidor/Admins.xml");
