@@ -8,6 +8,12 @@ package model;
  *
  * @author Gabriel
  */
-public class Admin extends Usuario {
-    
+public class Admin{
+    private String ussername;
+    private String password;
+     
+    public Admin(String user, String pssw){
+        this.ussername = user;
+        this.password = pssw;
+    }
 }
