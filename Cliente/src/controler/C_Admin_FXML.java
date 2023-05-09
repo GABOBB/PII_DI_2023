@@ -247,7 +247,19 @@ public class C_Admin_FXML implements Initializable {
         }
     }
 
-
+    private void admins_to_string(){
+        String total = "Actualizar_Administradores";
+        int num =  this.admins.size();
+        for(int i = 0;i<=num; i++){
+            Admin temp = this.admins.get(i);
+            String u = temp.getUser();
+            String p = temp.getPssw();
+            
+            String tempT = "###" + u + ";" + p;
+            total += tempT;
+        }
+        Cliente.send(total);
+    }
 //###########################################metodos de cola de pedidos#################################################################
 
 
