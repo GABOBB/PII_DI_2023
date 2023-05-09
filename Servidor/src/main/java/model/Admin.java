@@ -16,4 +16,7 @@ public class Admin{
         this.ussername = user;
         this.password = pssw;
     }
+    
+    public String getU(){return this.ussername;}
+    public String getP(){return this.password;}
 }

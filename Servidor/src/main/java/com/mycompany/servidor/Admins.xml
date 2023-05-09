@@ -11,5 +11,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
         <user>Admin</user>
         <password>1234</password>
     </admin>
+    <admin>
+        <user>Admin2</user>
+        <password>1234</password>
+    </admin>
+    <admin>
+        <user>q</user>
+        <password>1234</password>
+    </admin>
+    <admin>
+        <user>2</user>
+        <password>1234</password>
+    </admin>
+    <admin>
+        <user>e</user>
+        <password>1234</password>
+    </admin>
 </root>
 

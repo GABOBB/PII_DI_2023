@@ -13,6 +13,8 @@ public class N_d_e{
 
     public N_d_e(String id){
         this.id = id;
+        this.N = null;
+        this.P = null;
     }
 
     public N_d_e(String id, Object data){

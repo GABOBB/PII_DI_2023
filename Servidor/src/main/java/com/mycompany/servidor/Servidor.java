@@ -21,6 +21,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import model.A_B_B;
+import model.Admin;
+import model.Cliente;
 import model.N_B_B;
 
 /**
@@ -31,22 +33,13 @@ public class Servidor {
     A_B_B admns;
     A_B_B clnts;
     public Servidor(){
-        try {
+        try{
             this.admns = new A_B_B("admns");
             this.clnts = new A_B_B("clnts");
             load_Admins();
             load_Clnts();
-        } catch (Exception e) {
-        
-        }
-        try{
-        
             this.on_server();
-       
-        }catch(IOException e){
-            System.err.println(e);
-        }
-        
+        }catch(Exception e){}        
     }
     
     private void load_Admins(){
@@ -62,7 +55,14 @@ public class Servidor {
                 Node node = nL.item(i);
                 if(node.getNodeType()==Node.ELEMENT_NODE){
                     Element element =(Element)node;
-                    N_B_B new_n = new N_B_B(element.getElementsByTagName("user").item(0).getTextContent(),node);
+                    
+                    String user = element.getElementsByTagName("user").item(0).getTextContent();
+                    String pssw = element.getElementsByTagName("password").item(0).getTextContent();
+                    
+                    Admin new_AD = new Admin(user,pssw);
+                    
+                    N_B_B new_n = new N_B_B(user,new_AD);
+                    
                     this.admns.add_N(new_n);
                 }
             }
@@ -86,7 +86,14 @@ public class Servidor {
                 Node node = nL.item(i);
                 if(node.getNodeType()==Node.ELEMENT_NODE){
                     Element element =(Element)node;
-                    N_B_B new_n = new N_B_B(element.getElementsByTagName("user").item(0).getTextContent(),node);
+                    
+                    String user = element.getElementsByTagName("user").item(0).getTextContent();
+                    String pssw = element.getElementsByTagName("password").item(0).getTextContent();
+                    
+                    Cliente new_CL = new Cliente(user,pssw);
+                    
+                    N_B_B new_n = new N_B_B(user,new_CL);
+                    
                     this.clnts.add_N(new_n);
                 }
             }
@@ -115,7 +122,7 @@ public class Servidor {
 
             while (true) {
                 clientSocket = serverSocket.accept();
-                System.out.println("Client [1] Connected");
+                System.out.println("Client Connected");
 
                 in = new DataInputStream(clientSocket.getInputStream());
                 out = new DataOutputStream(clientSocket.getOutputStream());
@@ -124,6 +131,8 @@ public class Servidor {
                 System.out.println("i recive:" + message);
                 if(message.equals("hola server")){
                     out.writeUTF("Hola Cliente");
+                    
+                    
                 }
                 
                 if(message.startsWith("Buscar")){
@@ -135,7 +144,10 @@ public class Servidor {
                         out.writeUTF("Cliente");
                     }else{
                         out.writeUTF("No encontrado");
+                        
                     }
+                }else if (message.equals("lista de administradores")){
+                    out.writeUTF(this.admns.get_eA());
                 }
                 clientSocket.close();
                 System.out.println("Client [1] Disconnected");
@@ -150,82 +162,28 @@ public class Servidor {
         if(temp == null){
             return false;
         }else{
-            Element element = (Element) temp.getData();
-            if(password.equals(element.getElementsByTagName("password").item(0).getTextContent())){
+            Admin adm = (Admin) temp.getData();
+            if(adm.getP().equals(password)){
                 return true;
             }else{
                 return false;
             }
             
         }
-        /*try{
-            File admins= new File("src/main/java/com/mycompany/servidor/Admins.xml");
-            DocumentBuilderFactory dBF = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dB= dBF.newDocumentBuilder();
-            Document doc = dB.parse(admins);
-            doc.getDocumentElement().normalize();
-
-            NodeList nL = doc.getElementsByTagName("admin");
-            for(int i =0; i<nL.getLength();i++){
-            Node node = nL.item(i);
-                if(node.getNodeType()==Node.ELEMENT_NODE){
-                    Element element =(Element)node;
-                    if(user.equals(element.getElementsByTagName("user").item(0).getTextContent())){
-                        if(password.equals(element.getElementsByTagName("password").item(0).getTextContent())){
-                            return true;
-                        }else{
-                            return false;
-                        }
-                    }
-                }
-            }
-            return false;
-        } catch (Exception e) {
-        System.out.println(e);
-        return false;
-        }*/
     }
     
     public boolean buscarCliente(String user, String password){
-        
         N_B_B temp = this.clnts.srch_id(user);
         if(temp == null){
             return false;
         }else{
-            Element element = (Element) temp.getData();
-            if(password.equals(element.getElementsByTagName("password").item(0).getTextContent())){
+            Cliente clt = (Cliente) temp.getData();
+            if(clt.getP().equals(password)){
                 return true;
             }else{
                 return false;
             }
             
         }
-        
-        /*try {
-        File clientes= new File("src/main/java/com/mycompany/servidor/Clientes.xml");
-        DocumentBuilderFactory dBF = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dB= dBF.newDocumentBuilder();
-        Document doc = dB.parse(clientes);
-        doc.getDocumentElement().normalize();
-        
-        NodeList nL = doc.getElementsByTagName("client");
-        for(int i =0; i<nL.getLength();i++){
-        Node node = nL.item(i);
-        if(node.getNodeType()==Node.ELEMENT_NODE){
-        Element element =(Element)node;
-        if(user.equals(element.getElementsByTagName("user").item(0).getTextContent())){
-        if(password.equals(element.getElementsByTagName("password").item(0).getTextContent())){
-        return true;
-        }else{
-        return false;
-        }
-        }
-        }
-        }
-        return false;
-        } catch (Exception e) {
-        System.out.println(e);
-        return false;
-        }*/
     }
 }

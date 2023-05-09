@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -29,6 +30,8 @@ public class C_Login_FXML implements Initializable {
     private PasswordField pwPassword;
     @FXML
     private TextField tfUser;
+    @FXML
+    private Text error_t;
     /**
      * Initializes the controller class.
      */
@@ -85,13 +88,24 @@ public class C_Login_FXML implements Initializable {
 
     @FXML
     private void logIn(ActionEvent event) throws Exception {
-        String msg=Cliente.send("Buscar "+this.tfUser.getText()+" "+this.pwPassword.getText());
-        if(msg.equals("Admin")){
-            load_a();
-        }else if(msg.equals("Cliente")){
-            load_c();
-        }else{
-            System.out.println("Usuario o Contraseña invalida");
+        
+        String user = this.tfUser.getText();
+        String pssw = this.pwPassword.getText();
+        
+        if(user.length()==0 | pssw.length()==0){
+            this.error_t.setText("datos incompletos");
+            this.error_t.setVisible(true);
+            
+        }else{  
+            String msg = Cliente.send("Buscar "+user+" "+pssw);
+            if(msg.equals("Admin")){
+                load_a();
+            }else if(msg.equals("Cliente")){
+                load_c();
+            }else{
+                this.error_t.setText("datos incorrectos");
+                this.error_t.setVisible(true);
+            }
         }
     }
     

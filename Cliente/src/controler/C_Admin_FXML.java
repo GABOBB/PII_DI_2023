@@ -3,11 +3,24 @@ package controler;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Admin;
 
 /**
  * FXML Controller class
@@ -17,14 +30,232 @@ import javafx.stage.Stage;
 public class C_Admin_FXML implements Initializable {
     private Stage stg;
     
+//############################################main#######################################################################
+    @FXML
+    private Button main_B;
+    @FXML
+    private AnchorPane main_A_P;  
+//######################administracion de usuarios############################################################    
+    @FXML
+    private Button L_U_B;
+    @FXML
+    private AnchorPane L_U_A_P;
+    @FXML
+    private TableView<Admin> LD_t;//tabla de los administradores
+    @FXML
+    private TableColumn LD_c;//colubna de administradores
+    
+    private ObservableList<Admin> admins;
+    
+    @FXML
+    private TextField LD_u_tf;
+    @FXML
+    private TextField LD_c_tf;
+    
+//############################################Cola de Pedidos############################################################
+    @FXML
+    private Button C_P_B;
+    @FXML
+    private AnchorPane C_P_A_P;
+//############################################Menu#######################################################################
+    @FXML
+    private Button M_B;
+    @FXML
+    private AnchorPane m_A_P;
+//############################################LOG OUT####################################################################
+    @FXML
+    private Button Log_OUT;
+    @FXML
+    private Button new_admin_bt;
+    @FXML
+    private Button delet_admin_bt;
+    @FXML
+    private Button modificar_admin_bt;
+
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        this.main_A_P.setVisible(true);
+        this.C_P_A_P.setVisible(false);
+        this.L_U_A_P.setVisible(false);
+        this.m_A_P.setVisible(false);
+        
+        
+    //######################administracion de usuarios############################################################
+        admins = FXCollections.observableArrayList();
+        this.LD_c.setCellValueFactory(new PropertyValueFactory("user"));
+    //######################administracion de usuarios############################################################
     }    
 
+
+    
+   
+
+    @FXML
+    private void A_P_selector(ActionEvent e) {
+        if(main_B==e.getSource()){
+            
+            this.main_A_P.setVisible(true);
+            this.C_P_A_P.setVisible(false);
+            this.L_U_A_P.setVisible(false);
+            this.m_A_P.setVisible(false);
+            
+        }else if(L_U_B==e.getSource()){
+            
+            this.load_L_U();
+            this.main_A_P.setVisible(false);
+            this.C_P_A_P.setVisible(false);
+            this.L_U_A_P.setVisible(true);
+            this.m_A_P.setVisible(false);
+            
+            
+            
+            
+        }else if(C_P_B==e.getSource()){
+            
+            this.main_A_P.setVisible(false);
+            this.C_P_A_P.setVisible(true);
+            this.L_U_A_P.setVisible(false);
+            this.m_A_P.setVisible(false);
+        
+        }else if(M_B == e.getSource()){
+        
+            this.main_A_P.setVisible(false);
+            this.C_P_A_P.setVisible(false);
+            this.L_U_A_P.setVisible(false);
+            this.m_A_P.setVisible(true);
+            
+        }
+    }
+    
+    
+//############################################metodos del main menu####################################################################
+
+
+
+
+
+//###########################################metodos de lista de usuarios##############################################################
+    private void load_L_U(){
+        
+        this.admins.clear();
+        this.LD_t.setItems(admins);
+        String as[] = Cliente.send("lista de administradores").split("###");
+        for(int i=1; i<as.length; i++){
+            String t = as[i];
+            Admin a = new Admin(t.split(";")[0],t.split(";")[1]);
+            admins.add(a);
+        }
+        this.LD_t.setItems(admins);
+    }
+    
+    private void show_admin(String u, String p){
+        Admin new_A = new Admin(u,p);
+        
+        if(!this.admins.contains(new_A)){
+            this.admins.add(new_A);
+            this.LD_t.setItems(admins);
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("estas credenciales ya estan en uso, por favor intente otras");
+            alert.showAndWait(); 
+        
+        }
+    }
+    @FXML
+    private void new_user_admin(ActionEvent event) {
+        String u = this.LD_u_tf.getText();
+        String p = this.LD_c_tf.getText();
+        if((u==null || p == null) || (u.isBlank() || p.isBlank())){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText(null);
+            a.setTitle("Error");
+            a.setContentText("deve de llenar ambos espacio");
+            a.showAndWait();  
+        }else{
+            
+            show_admin(u,p);
+        }
+    }
+
+        @FXML
+    private void selecionar_admin(MouseEvent event) {
+        Admin a = this.LD_t.getSelectionModel().getSelectedItem();
+        if(a!=null){
+            this.LD_u_tf.setText(a.getUser());
+            this.LD_c_tf.setText(a.getPssw());
+        }
+    }
+
+    @FXML
+    private void eliminar_admin(ActionEvent event) {
+        Admin a = this.LD_t.getSelectionModel().getSelectedItem();
+        if(a!=null){
+            this.admins.remove(a);
+            this.LD_t.refresh();
+            this.LD_u_tf.setText(null);
+            this.LD_c_tf.setText(null);
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("deve de seleccionar un usuario administrador para eliminarlo");
+            alert.showAndWait(); 
+        }
+    }
+
+    @FXML
+    private void modificar_admin(ActionEvent event) {
+        Admin a = this.LD_t.getSelectionModel().getSelectedItem();
+        if(a == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("deve de seleccionar un usuario administrador para modificarlo");
+            alert.showAndWait();  
+        }else{
+            try{
+            String u = this.LD_u_tf.getText();
+            String p = this.LD_c_tf.getText();
+            
+            Admin ad_ax = new Admin(u,p);
+            
+            if(!this.admins.contains(ad_ax)){
+                a.setUser(u);
+                a.setPssw(p);
+                
+                this.LD_t.refresh();
+            
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Error");
+                alert.setContentText("estas credenciales ya estan en uso, por favor intente otras");
+                alert.showAndWait();  
+            }
+
+            }catch(Exception e){
+            
+            
+            }
+        
+        }
+    }
+
+
+//###########################################metodos de cola de pedidos#################################################################
+
+
+
+
+
+//##########################################metodos del menu############################################################################   
+        @FXML
     public void closeTab(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/visual/login_FXML.fxml"));
@@ -49,4 +280,7 @@ public class C_Admin_FXML implements Initializable {
     }
     
     public void set_stage(Stage e){this.stg = e;}
+
+
+
 }

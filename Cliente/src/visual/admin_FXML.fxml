@@ -1,16 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="controler.C_Admin_FXML">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.C_Admin_FXML">
    <children>
-      <Label layoutX="183.0" layoutY="173.0" text="Ventana Admin en Desarrollo">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
+      <VBox prefHeight="405.0" prefWidth="124.0">
+         <children>
+            <Button fx:id="main_B" mnemonicParsing="false" onAction="#A_P_selector" prefHeight="92.0" prefWidth="124.0" style="-fx-background-color: #111111;" text="main " textAlignment="JUSTIFY" textFill="#00c3ff" wrapText="true">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Button>
+            <Button fx:id="L_U_B" mnemonicParsing="false" onAction="#A_P_selector" prefHeight="75.0" prefWidth="124.0" style="-fx-background-color: #444444;" text="lista de usuarios" textAlignment="CENTER" textFill="#00c3ff" textOverrun="CLIP" wrapText="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="C_P_B" mnemonicParsing="false" onAction="#A_P_selector" prefHeight="87.0" prefWidth="124.0" style="-fx-background-color: #333333;" text="cola de pedidos" textAlignment="CENTER" textFill="#00c3ff" wrapText="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="M_B" mnemonicParsing="false" onAction="#A_P_selector" prefHeight="77.0" prefWidth="124.0" style="-fx-background-color: #222222;" text="menu" textAlignment="JUSTIFY" textFill="#00c3ff" wrapText="true">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Button>
+            <Button fx:id="Log_OUT" mnemonicParsing="false" onAction="#closeTab" prefHeight="74.0" prefWidth="124.0" style="-fx-background-color: #00c3ff;" text="log Out" textAlignment="JUSTIFY" wrapText="true">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <AnchorPane fx:id="main_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #111111;">
+         <children>
+            <Text fill="#00c3ff" layoutX="124.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Table Tech" wrappingWidth="219.0">
+               <font>
+                  <Font size="46.0" />
+               </font></Text>
+            <Text fill="#00c3ff" layoutX="171.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Administrador" wrappingWidth="138.0">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <Text fill="#00c3ff" layoutX="14.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenido a Table Tech Administradores " wrappingWidth="402.0">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <Text fill="#00c3ff" layoutX="14.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestiona el comedor de forma eficiente e intuitiva" wrappingWidth="364.0">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="L_U_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #444444;" visible="false">
+         <children>
+            <Text fill="#00c3ff" layoutX="19.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de usuarios" wrappingWidth="256.0">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Text>
+            <TableView fx:id="LD_t" layoutX="309.0" layoutY="37.0" onMouseClicked="#selecionar_admin" prefHeight="354.0" prefWidth="154.0" style="-fx-background-color: #333333;">
+              <columns>
+                <TableColumn fx:id="LD_c" editable="false" prefWidth="153.0" resizable="false" sortable="false" style="-fx-text-fill: #00c3ff; -fx-background-color: #333333; -fx-border-color: #00c3ff;" text="Admins" />
+              </columns>
+            </TableView>
+            <TextField fx:id="LD_u_tf" layoutX="32.0" layoutY="287.0" onAction="#new_user_admin" style="-fx-background-color: #333333; -fx-text-fill: #22668F;" />
+            <TextField fx:id="LD_c_tf" layoutX="32.0" layoutY="347.0" onAction="#new_user_admin" style="-fx-background-color: #333333; -fx-text-fill: #22668F;" />
+            <Text fill="#00c3ff" layoutX="32.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de usuario">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Text>
+            <Text fill="#00c3ff" layoutX="32.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="contraseña">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Text>
+            <Button fx:id="new_admin_bt" layoutX="206.0" layoutY="287.0" mnemonicParsing="false" onAction="#new_user_admin" prefHeight="25.0" prefWidth="33.0" style="-fx-background-color: #333333; -fx-text-fill: #00c3ff;" text="+">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="delet_admin_bt" layoutX="246.0" layoutY="287.0" mnemonicParsing="false" onAction="#eliminar_admin" prefHeight="25.0" prefWidth="33.0" style="-fx-background-color: #333333; -fx-text-fill: #00c3ff;" text="-">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="modificar_admin_bt" layoutX="204.0" layoutY="332.0" mnemonicParsing="false" onAction="#modificar_admin" prefHeight="31.0" prefWidth="77.0" style="-fx-background-color: #333333; -fx-text-fill: #00c3ff;" text="modificar" textOverrun="CLIP" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="C_P_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #333333;" visible="false">
+         <children>
+            <Text layoutX="197.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="cola de pedidos" />
+            <TableView layoutX="139.0" layoutY="53.0" prefHeight="200.0" prefWidth="270.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="m_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #222222;" visible="false">
+         <children>
+            <Text fill="#00c3ff" layoutX="7.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Text>
+            <TableView layoutX="270.0" layoutY="22.0" prefHeight="370.0" prefWidth="193.0" style="-fx-background-color: #353535; -fx-border-color: #00c3ff;">
+              <columns>
+                <TableColumn prefWidth="199.0" style="-fx-background-color: #00c3ff;" text="Platillos" />
+              </columns>
+            </TableView>
+            <TextField layoutX="20.0" layoutY="133.0" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #353535;" />
+            <TextField layoutX="20.0" layoutY="169.0" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #353535;" />
+            <TextField layoutX="20.0" layoutY="204.0" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #353535;" />
+            <TextField layoutX="20.0" layoutY="242.0" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #353535;" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

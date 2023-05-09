@@ -4,25 +4,10 @@
  */
 package model;
 
-
-
 /**
  *
  * @author Gabriel
  */
-public class Cliente extends Admin {
-    private int num_pedidos;
-    private L_d_e LDP;
-
-    public Cliente(String user, String pssw){
-        super(user, pssw);
-        
-    }
-    
-    public void load_L(){
-    
-    }
-    
-    
+public class A_AVL {
     
 }
