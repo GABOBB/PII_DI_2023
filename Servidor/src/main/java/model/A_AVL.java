@@ -8,37 +8,84 @@ package model;
  *
  * @author Gabriel
  */
-public class A_AVL extends A_B_B{
+public class A_AVL{
+    private String id;
+    private N_AVL root;
+    private int size;
+    private L_d_e elements;
     
+    
+    public A_AVL(String id){
+        this.id=id;
+        this.root=null;
+        this.size=0;
+        this.elements=new L_d_e(id);
+    }
+    
+    public boolean insertar(N_AVL node) {
+        N_d_e nl = new N_d_e(node.getId(),node.getPlatillo());
+        this.elements.add_N(nl);
+        if(this.root==null){
+            this.root = node;
+            this.size++;
+            return true;
+        }else{
+            N_AVL act = this.root;
+            
+            while(true){
+                if(node.getId().compareTo(act.getId()) < 0){
+                    
+                    if(act.getLT() == null){
+                        act.setLT(node);
+                        return true;
+                    }else{
+                        act = act.getLT();
+                    }
+                }else if(node.getId().compareTo(act.getId()) > 0){
+                    
+                    if(act.getRT() == null){
+                        act.setRT(node);
+                        return true;
+                    }else{
+                        act = act.getRT();
+                    }  
+                    
+                }else{
+                    return false;
+                }
+            }
+        
+        }
+    }
     
     private N_AVL rotateLeft(N_AVL node) {
-        N_AVL x = node.getRt();
+        N_AVL x = node.getRT();
         N_AVL T2 = x.getLT();
 
         x.setLT(node);
-        node.setRt(T2);
+        node.setRT(T2);
 
-        node.setHeight(1 + Math.max(height(node.getLT), height(node.getRt)));
-        x.height = 1 + Math.max(height(x.left), height(x.right));
+        node.setAltura(1 + Math.max(node.getLT().getAltura(), node.getRT().getAltura()));
+        x.setAltura(1 + Math.max(x.getLT().getAltura(), x.getRT().getAltura()));
 
-        node.size = 1 + size(node.left) + size(node.right);
-        x.size = 1 + size(x.left) + size(x.right);
+        node.setBalance(1 + node.getLT().getBlance() + node.getRT().getBlance());
+        x.setBalance(1 + x.getLT().getBlance() + x.getRT().getBlance());
 
         return x;
     }
 
-    private Node rotateRight(Node node) {
-        Node x = node.left;
-        Node T2 = x.right;
+    private N_AVL rotateRight(N_AVL node) {
+        N_AVL x = node.getLT();
+        N_AVL T2 = x.getRT();
 
-        x.right = node;
-        node.left = T2;
+        x.setRT(node);
+        node.setLT(T2);
 
-        node.height = 1 + Math.max(height(node.left), height(node.right));
-        x.height = 1 + Math.max(height(x.left), height(x.right));
+        node.setAltura(1 + Math.max(node.getLT().getAltura(), node.getRT().getAltura()));
+        x.setAltura(1 + Math.max(x.getLT().getAltura(), x.getRT().getAltura()));
 
-        node.size = 1 + size(node.left) + size(node.right);
-        x.size = 1 + size(x.left) + size(x.right);
+        node.setBalance(1 + node.getLT().getBlance() + node.getRT().getBlance());
+        x.setBalance(1 + x.getLT().getBlance() + x.getRT().getBlance());
 
         return x;
     }

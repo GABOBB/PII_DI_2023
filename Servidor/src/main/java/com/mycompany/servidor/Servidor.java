@@ -146,15 +146,27 @@ public class Servidor {
                         out.writeUTF("No encontrado");
                         
                     }
-                }else if (message.equals("lista de administradores")){
+                }else if(message.equals("lista de administradores")){
                     out.writeUTF(this.admns.get_eA());
+                }else if(message.startsWith("Actualizar_Administradores")){
+                    String temp[] = message.split("###");
+                    this.admns.clear();
+                    for(String aux : temp){
+                        String u = aux.split(";")[0];
+                        String p = aux.split(";")[1];
+                        Admin a = new Admin(u,p);
+                        
+                        N_B_B N = new N_B_B(u,a);
+                        this.admns.add_N(N);
+                    }
+                            
                 }
                 clientSocket.close();
                 System.out.println("Client [1] Disconnected");
             }
         } catch (IOException e) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, e);
-        } 
+        }
     }
     
     public boolean buscarAdmin(String user, String password){

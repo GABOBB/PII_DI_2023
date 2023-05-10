@@ -21,6 +21,13 @@ public class A_B_B {
         this.elements = new L_d_e(id);
     }
     
+    public void clear(){
+        this.root = null;
+        this.num = 0;
+        this.elements = new L_d_e(id);
+    
+    }
+    
     public String get_eA(){
         String total = "UA";
         N_d_e act = this.elements.getFirst();
