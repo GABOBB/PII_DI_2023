@@ -1,16 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="controler.C_Client_FXML">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.C_Client_FXML">
    <children>
-      <Label fx:id="lbl" layoutX="183.0" layoutY="173.0" text="Ventana Cliente en Desarrollo">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
+      <AnchorPane fx:id="Main_AP" layoutX="117.0" prefHeight="400.0" prefWidth="488.0" style="-fx-background-color: #00c3ff;" visible="false">
+         <children>
+            <Text layoutX="119.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Table Tech">
+               <font>
+                  <Font size="44.0" />
+               </font>
+            </Text>
+            <Text layoutX="12.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvendido a TableTech Cliente ">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Text>
+            <Text layoutX="12.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Realiza tus pedidos al comedor de manera eficiente e intuitiva">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="hacer_pedidos_AP" layoutX="112.0" prefHeight="400.0" prefWidth="494.0" style="-fx-background-color: #404040;">
+         <children>
+            <ComboBox fx:id="CB_platillos" layoutX="35.0" layoutY="120.0" prefWidth="150.0" promptText="Platillos" style="-fx-border-color: #00c3ff; -fx-text-fill: #00c3ff; -fx-background-color: #00c3ff;" />
+            <TableView fx:id="Lista_de_pedidos_act_tv" layoutX="278.0" layoutY="12.0" prefHeight="379.0" prefWidth="208.0" style="-fx-background-color: #202020;">
+              <columns>
+                <TableColumn fx:id="c_platillos_tc" prefWidth="207.0" resizable="false" sortable="false" style="-fx-text-fill: #00c3ff; -fx-borther-color: #00c3ff;" text="Platillos" />
+              </columns>
+            </TableView>
+            <TextField fx:id="Nomnbre_pedido_tf" editable="false" layoutX="35.0" layoutY="176.0" style="-fx-background-color: #202020; -fx-text-fill: #00c3ff;" />
+            <TextField fx:id="calorias_pedido_tf" editable="false" layoutX="35.0" layoutY="246.0" style="-fx-background-color: #202020; -fx-text-fill: #00c3ff;" />
+            <TextField fx:id="precio_pedido_tf" editable="false" layoutX="35.0" layoutY="211.0" style="-fx-background-color: #202020; -fx-text-fill: #00c3ff;" />
+            <Text layoutX="20.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Realiza tu pedido" wrappingWidth="257.4921875">
+               <font>
+                  <Font size="38.0" />
+               </font>
+            </Text>
+            <TextField fx:id="tiempo_pedido_tf" editable="false" layoutX="36.0" layoutY="281.0" style="-fx-background-color: #202020; -fx-text-fill: #00c3ff;" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="Pedidos_Activos_AP" layoutX="111.0" prefHeight="400.0" prefWidth="494.0" style="-fx-background-color: #303030;" visible="false" />
+      <AnchorPane fx:id="Historial_Pedidos_AP" layoutX="111.0" prefHeight="400.0" prefWidth="494.0" style="-fx-background-color: #202020;" visible="false" />
+      <VBox prefHeight="400.0" prefWidth="125.0">
+         <children>
+            <Button fx:id="B_main" mnemonicParsing="false" onAction="#select_window" prefHeight="84.0" prefWidth="143.0" style="-fx-background-color: #00c3ff;" text="TableTech">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Button>
+            <Button fx:id="B_realizar_pedidos" mnemonicParsing="false" onAction="#select_window" prefHeight="84.0" prefWidth="143.0" style="-fx-background-color: #404040;" text="hacer un pedido" textFill="#00c3ff">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="B_pedidos_activos" mnemonicParsing="false" onAction="#select_window" prefHeight="80.0" prefWidth="138.0" style="-fx-background-color: #303030;" text="Pedidos activos" textFill="#00c3ff">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="B_historial" mnemonicParsing="false" onAction="#select_window" prefHeight="84.0" prefWidth="143.0" style="-fx-background-color: #202020;" text="historial de pedidos" textAlignment="CENTER" textFill="#00c3ff" textOverrun="LEADING_WORD_ELLIPSIS" />
+            <Button fx:id="B_log_out" mnemonicParsing="false" onAction="#closeTab" prefHeight="84.0" prefWidth="143.0" style="-fx-background-color: #101010;" text="Log Out" textFill="#00c3ff">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

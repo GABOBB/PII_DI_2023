@@ -32,6 +32,9 @@ import model.N_B_B;
 public class Servidor {
     A_B_B admns;
     A_B_B clnts;
+    
+    Object usruario;
+    
     public Servidor(){
         try{
             this.admns = new A_B_B("admns");
@@ -61,7 +64,7 @@ public class Servidor {
                     
                     Admin new_AD = new Admin(user,pssw);
                     
-                    N_B_B new_n = new N_B_B(user,new_AD);
+                    N_B_B new_n = new N_B_B(user,new_AD,element);
                     
                     this.admns.add_N(new_n);
                 }
@@ -92,7 +95,7 @@ public class Servidor {
                     
                     Cliente new_CL = new Cliente(user,pssw);
                     
-                    N_B_B new_n = new N_B_B(user,new_CL);
+                    N_B_B new_n = new N_B_B(user,new_CL,element);
                     
                     this.clnts.add_N(new_n);
                 }
@@ -136,11 +139,13 @@ public class Servidor {
                 }
                 
                 if(message.startsWith("Buscar")){
-                    String user=message.split(" ")[1];
-                    String password=message.split(" ")[2];
-                    if(this.buscarAdmin(user,password)){
+                    String u=message.split(" ")[1];
+                    String p=message.split(" ")[2];
+                    if(this.buscarAdmin(u,p)){
+                        this.usruario = this.admns.srch_id(u);
                         out.writeUTF("Admin");
-                    }else if(this.buscarCliente(user,password)){
+                    }else if(this.buscarCliente(u,p)){
+                        this.usruario = this.clnts.srch_id(u);
                         out.writeUTF("Cliente");
                     }else{
                         out.writeUTF("No encontrado");

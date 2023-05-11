@@ -3,13 +3,22 @@ package controler;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Platillo;
 
 /**
  * FXML Controller class
@@ -18,18 +27,69 @@ import javafx.stage.Stage;
  */
 public class C_Client_FXML implements Initializable {
     private Stage stg;
+    
+//##############################################Main############################################################
     @FXML
-    private Label lbl;
+    private AnchorPane Main_AP;
+    @FXML
+    private Button B_main;
+//##############################################Realizar Pedidos################################################
+    @FXML
+    private AnchorPane hacer_pedidos_AP;
+    @FXML
+    private Button B_realizar_pedidos;
+    
+    @FXML
+    private TableView<Platillo> Lista_de_pedidos_act_tv;
+    @FXML
+    private TableColumn c_platillos_tc;
+    
+    private ObservableList<Platillo> platillos;
+    
+    @FXML
+    private ComboBox<?> CB_platillos;
+    @FXML
+    private TextField Nomnbre_pedido_tf;
+    @FXML
+    private TextField calorias_pedido_tf;
+    @FXML
+    private TextField precio_pedido_tf;
+    @FXML
+    private TextField tiempo_pedido_tf;
+//##############################################Pedidos Activos#################################################
+    @FXML
+    private AnchorPane Pedidos_Activos_AP;
+    @FXML
+    private Button B_pedidos_activos;
+//##############################################Historial#######################################################
+    @FXML
+    private AnchorPane Historial_Pedidos_AP;
+    @FXML
+    private Button B_historial;
+//##############################################################################################################
+    @FXML
+    private Button B_log_out;
+
+
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        this.Main_AP.setVisible(true);
+        this.hacer_pedidos_AP.setVisible(false);
+        this.Pedidos_Activos_AP.setVisible(false);
+        this.Historial_Pedidos_AP.setVisible(false);
+        
+        //##########################################hacer pedidos###############################################
+        
+        
     }    
     
     
     
+    @FXML
     public void closeTab(){
         try{
            FXMLLoader loader = new FXMLLoader(getClass().getResource("/visual/login_FXML.fxml"));
@@ -54,4 +114,49 @@ public class C_Client_FXML implements Initializable {
     }
     
     public void set_stage(Stage e){this.stg = e;}
+
+    @FXML
+    private void select_window(ActionEvent e) {
+        if(e.getSource() == this.B_main){
+            
+            this.Main_AP.setVisible(true);
+            this.hacer_pedidos_AP.setVisible(false);
+            this.Pedidos_Activos_AP.setVisible(false);
+            this.Historial_Pedidos_AP.setVisible(false);
+        
+        }else if(e.getSource() == this.B_realizar_pedidos){
+        
+            this.Main_AP.setVisible(false);
+            this.hacer_pedidos_AP.setVisible(true);
+            this.Pedidos_Activos_AP.setVisible(false);
+            this.Historial_Pedidos_AP.setVisible(false);
+            
+        }else if(e.getSource() == this.B_pedidos_activos){
+        
+            this.Main_AP.setVisible(false);
+            this.hacer_pedidos_AP.setVisible(false);
+            this.Pedidos_Activos_AP.setVisible(true);
+            this.Historial_Pedidos_AP.setVisible(false);
+            
+        }else if(e.getSource() == this.B_historial){
+        
+            this.Main_AP.setVisible(false);
+            this.hacer_pedidos_AP.setVisible(false);
+            this.Pedidos_Activos_AP.setVisible(false);
+            this.Historial_Pedidos_AP.setVisible(true);
+            
+        }
+    }
+    
+    
+//##############################################Main############################################################
+    
+    
+//##############################################Realizar Pedidos################################################
+
+
+//##############################################Pedidos Activos#################################################
+
+
+//##############################################Historial#######################################################
 }
