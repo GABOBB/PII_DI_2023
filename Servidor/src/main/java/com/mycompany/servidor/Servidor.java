@@ -20,6 +20,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
+import model.A_AVL;
 import model.A_B_B;
 import model.Admin;
 import model.Cliente;
@@ -33,6 +34,7 @@ import model.N_B_B;
 public class Servidor {
     A_B_B admns;
     A_B_B clnts;
+    A_AVL platillos;
     Cola pedidos;
     
     Object usruario;
@@ -41,8 +43,10 @@ public class Servidor {
         try{
             this.admns = new A_B_B("admns");
             this.clnts = new A_B_B("clnts");
+            this.platillos= new A_AVL("platillos");
             this.pedidos = new Cola(25);
             
+            load_Platillos();
             load_Admins();
             load_Clnts();
             this.on_server();
@@ -110,6 +114,12 @@ public class Servidor {
             return;
         }
     } 
+    
+    public void load_Platillos(){
+        String JSON = leer("src/main/java/com/mycompany/servidor/Platillos.json");
+        
+        
+    }
     
     public static void main(String[] args) {
         new Servidor();

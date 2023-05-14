@@ -1,3 +1,16 @@
 {
-    "name": "kondy"
+    "platillos":[
+     {
+        "nombre": "Gallo Pinto",
+        "precio": "200",
+        "calorias": "500",
+        "tiempo de preparcion": "40"
+     },
+     {
+        "nombre": "Chifirjo",
+        "precio": "800",
+        "calorias": "900",
+        "tiempo de preparcion": "120"
+     }
+    ]
 }
