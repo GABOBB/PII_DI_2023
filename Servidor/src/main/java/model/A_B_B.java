@@ -21,6 +21,10 @@ public class A_B_B {
         this.elements = new L_d_e(id);
     }
     
+    public L_d_e getList(){
+        return this.elements;
+    }
+    
     public void clear(){
         this.root = null;
         this.num = 0;

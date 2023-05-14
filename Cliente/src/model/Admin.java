@@ -35,11 +35,11 @@ public class Admin {
         this.pssw = pssw;
     }
 
-    @Override
+    /*    @Override
     public int hashCode() {
-        int hash = 5;
-        return hash;
-    }
+    int hash = 5;
+    return hash;
+    }*/
 
     @Override
     public boolean equals(Object obj) {

@@ -39,7 +39,7 @@
             </Button>
          </children>
       </VBox>
-      <AnchorPane fx:id="main_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #111111;">
+      <AnchorPane fx:id="main_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #111111;" visible="false">
          <children>
             <Text fill="#00c3ff" layoutX="124.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Table Tech" wrappingWidth="219.0">
                <font>
@@ -62,7 +62,7 @@
             </Text>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="L_U_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #444444;" visible="false">
+      <AnchorPane fx:id="L_U_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #444444;">
          <children>
             <Text fill="#00c3ff" layoutX="19.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de usuarios" wrappingWidth="256.0">
                <font>
@@ -97,17 +97,25 @@
                </font>
             </Button>
             <Button fx:id="modificar_admin_bt" layoutX="204.0" layoutY="332.0" mnemonicParsing="false" onAction="#modificar_admin" prefHeight="31.0" prefWidth="77.0" style="-fx-background-color: #333333; -fx-text-fill: #00c3ff;" text="modificar" textOverrun="CLIP" />
+            <AnchorPane layoutX="272.0" layoutY="14.0" prefHeight="51.0" prefWidth="193.0" style="-fx-background-color: #444444;" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="C_P_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #333333;" visible="false">
          <children>
-            <Text layoutX="197.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="cola de pedidos" />
-            <TableView layoutX="139.0" layoutY="53.0" prefHeight="200.0" prefWidth="270.0">
+            <Text fill="#00c3ff" layoutX="11.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cola de Pedidos">
+               <font>
+                  <Font size="38.0" />
+               </font></Text>
+            <TableView fx:id="cola_tv" layoutX="20.0" layoutY="62.0" prefHeight="318.0" prefWidth="280.0" style="-fx-background-color: #00c3ff;">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="cola_cv" prefWidth="279.0" style="-fx-text-fill: #222222; -fx-border-color: #222222;" text="C1" />
               </columns>
             </TableView>
+            <Text fx:id="time_label" fill="#00c3ff" layoutX="319.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00" wrappingWidth="130.4384765625">
+               <font>
+                  <Font size="37.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="m_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #222222;" visible="false">

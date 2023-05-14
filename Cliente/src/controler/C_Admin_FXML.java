@@ -19,8 +19,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Admin;
+import model.Platillo;
 
 /**
  * FXML Controller class
@@ -57,6 +59,8 @@ public class C_Admin_FXML implements Initializable {
     private Button C_P_B;
     @FXML
     private AnchorPane C_P_A_P;
+    
+    private ObservableList<Platillo> pedidos_en_cola;
 //############################################Menu#######################################################################
     @FXML
     private Button M_B;
@@ -71,6 +75,12 @@ public class C_Admin_FXML implements Initializable {
     private Button delet_admin_bt;
     @FXML
     private Button modificar_admin_bt;
+    @FXML
+    private TableView<?> cola_tv;
+    @FXML
+    private TableColumn<?, ?> cola_cv;
+    @FXML
+    private Text time_label;
 
     
     /**
@@ -105,7 +115,7 @@ public class C_Admin_FXML implements Initializable {
             
         }else if(L_U_B==e.getSource()){
             
-            this.load_L_U();
+            this.load_L_U(Cliente.send("lista de administradores").split("###"));
             this.main_A_P.setVisible(false);
             this.C_P_A_P.setVisible(false);
             this.L_U_A_P.setVisible(true);
@@ -116,10 +126,11 @@ public class C_Admin_FXML implements Initializable {
             
         }else if(C_P_B==e.getSource()){
             
+            this.load_pedidos();
             this.main_A_P.setVisible(false);
             this.C_P_A_P.setVisible(true);
             this.L_U_A_P.setVisible(false);
-            this.m_A_P.setVisible(false);
+            this.m_A_P.setVisible(false);   
         
         }else if(M_B == e.getSource()){
         
@@ -139,11 +150,11 @@ public class C_Admin_FXML implements Initializable {
 
 
 //###########################################metodos de lista de usuarios##############################################################
-    private void load_L_U(){
-        
+    private void load_L_U(String as[]){
+        this.LD_u_tf.setText(null);
+        this.LD_c_tf.setText(null);
         this.admins.clear();
         this.LD_t.setItems(admins);
-        String as[] = Cliente.send("lista de administradores").split("###");
         for(int i=1; i<as.length; i++){
             String t = as[i];
             Admin a = new Admin(t.split(";")[0],t.split(";")[1]);
@@ -158,6 +169,7 @@ public class C_Admin_FXML implements Initializable {
         if(!this.admins.contains(new_A)){
             this.admins.add(new_A);
             this.LD_t.setItems(admins);
+            this.admins_to_string();
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -200,6 +212,8 @@ public class C_Admin_FXML implements Initializable {
             this.LD_t.refresh();
             this.LD_u_tf.setText(null);
             this.LD_c_tf.setText(null);
+            this.admins_to_string();
+            
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -219,7 +233,7 @@ public class C_Admin_FXML implements Initializable {
             alert.setContentText("deve de seleccionar un usuario administrador para modificarlo");
             alert.showAndWait();  
         }else{
-            try{
+            
             String u = this.LD_u_tf.getText();
             String p = this.LD_c_tf.getText();
             
@@ -230,7 +244,8 @@ public class C_Admin_FXML implements Initializable {
                 a.setPssw(p);
                 
                 this.LD_t.refresh();
-            
+                admins_to_string();
+                
             }else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText(null);
@@ -239,10 +254,9 @@ public class C_Admin_FXML implements Initializable {
                 alert.showAndWait();  
             }
 
-            }catch(Exception e){
             
             
-            }
+            
         
         }
     }
@@ -250,7 +264,7 @@ public class C_Admin_FXML implements Initializable {
     private void admins_to_string(){
         String total = "Actualizar_Administradores";
         int num =  this.admins.size();
-        for(int i = 0;i<=num; i++){
+        for(int i = 0;i<num; i++){
             Admin temp = this.admins.get(i);
             String u = temp.getUser();
             String p = temp.getPssw();
@@ -258,11 +272,32 @@ public class C_Admin_FXML implements Initializable {
             String tempT = "###" + u + ";" + p;
             total += tempT;
         }
-        Cliente.send(total);
+        System.out.println(total);
+        this.load_L_U(Cliente.send(total).split("###"));
     }
 //###########################################metodos de cola de pedidos#################################################################
 
+    private void load_pedidos(){
+        String returned = Cliente.send("get_pedidos");
+        if(returned != null){
+            String pedidos[] = returned.split("###");
+            if(pedidos != null){
+                for(String pedido : pedidos){
 
+                    String[] i = pedido.split(";");
+                    if(i.length == 5){
+                        Platillo p = new Platillo(  i[0],
+                                                    i[1],
+                                                    Integer.parseInt(i[2]),
+                                                    Integer.parseInt(i[3]),
+                                                    Integer.parseInt(i[4]));
+
+                    }
+                }
+
+            }
+        }
+    }
 
 
 

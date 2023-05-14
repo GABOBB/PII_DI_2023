@@ -47,7 +47,7 @@ public class C_Client_FXML implements Initializable {
     private ObservableList<Platillo> platillos;
     
     @FXML
-    private ComboBox<?> CB_platillos;
+    private ComboBox<Platillo> CB_platillos;
     @FXML
     private TextField Nomnbre_pedido_tf;
     @FXML
@@ -77,13 +77,14 @@ public class C_Client_FXML implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         this.Main_AP.setVisible(true);
         this.hacer_pedidos_AP.setVisible(false);
         this.Pedidos_Activos_AP.setVisible(false);
         this.Historial_Pedidos_AP.setVisible(false);
         
         //##########################################hacer pedidos###############################################
-        
+        this.CB_platillos.setItems(platillos);
         
     }    
     
@@ -126,6 +127,7 @@ public class C_Client_FXML implements Initializable {
         
         }else if(e.getSource() == this.B_realizar_pedidos){
         
+            this.loadPlatillos();
             this.Main_AP.setVisible(false);
             this.hacer_pedidos_AP.setVisible(true);
             this.Pedidos_Activos_AP.setVisible(false);
@@ -153,7 +155,22 @@ public class C_Client_FXML implements Initializable {
     
     
 //##############################################Realizar Pedidos################################################
-
+    public void loadPlatillos(){
+    String PLATILLOS = Cliente.send("get_platillos");
+        if(platillos != null){
+            String platillos[] = PLATILLOS.split("###");
+            for(String sp : platillos){
+                String auxp[] = sp.split(";");
+                String id = auxp[0];
+                int c = Integer.parseInt(auxp[1]);
+                int t = Integer.parseInt(auxp[2]);
+                int p = Integer.parseInt(auxp[3]);
+                Platillo P = new Platillo(id,c,t,p); 
+                this.CB_platillos.getItems().add(P);
+            }
+            
+        }
+    }
 
 //##############################################Pedidos Activos#################################################
 

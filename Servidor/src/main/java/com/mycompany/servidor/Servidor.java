@@ -23,6 +23,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import model.A_B_B;
 import model.Admin;
 import model.Cliente;
+import model.Cola;
 import model.N_B_B;
 
 /**
@@ -32,6 +33,7 @@ import model.N_B_B;
 public class Servidor {
     A_B_B admns;
     A_B_B clnts;
+    Cola pedidos;
     
     Object usruario;
     
@@ -39,6 +41,8 @@ public class Servidor {
         try{
             this.admns = new A_B_B("admns");
             this.clnts = new A_B_B("clnts");
+            this.pedidos = new Cola(25);
+            
             load_Admins();
             load_Clnts();
             this.on_server();
@@ -136,9 +140,7 @@ public class Servidor {
                     out.writeUTF("Hola Cliente");
                     
                     
-                }
-                
-                if(message.startsWith("Buscar")){
+                }else if(message.startsWith("Buscar")){
                     String u=message.split(" ")[1];
                     String p=message.split(" ")[2];
                     if(this.buscarAdmin(u,p)){
@@ -154,7 +156,9 @@ public class Servidor {
                 }else if(message.equals("lista de administradores")){
                     out.writeUTF(this.admns.get_eA());
                 }else if(message.startsWith("Actualizar_Administradores")){
-                    String temp[] = message.split("###");
+                    String total[] = message.split("###");
+                    String temp[] = new String[total.length - 1];
+                    System.arraycopy(total, 1, temp, 0, temp.length);
                     this.admns.clear();
                     for(String aux : temp){
                         String u = aux.split(";")[0];
@@ -163,8 +167,23 @@ public class Servidor {
                         
                         N_B_B N = new N_B_B(u,a);
                         this.admns.add_N(N);
+                        
                     }
-                            
+                    this.admns.getList().prntL();
+                    out.writeUTF(this.admns.get_eA());
+                }else if(message.equals("get_pedidos")){
+                    String r = this.pedidos.get_elemts();
+                    
+                    if(r != null){
+                        out.writeUTF(r);
+                    }
+                }else if(message.startsWith("nuevo_pedido")){
+                    String[] platillos = message.split("###");
+                    for(String platillo : platillos){
+                        
+                        String p = platillo.split(";")[0];
+                        
+                    }
                 }
                 clientSocket.close();
                 System.out.println("Client [1] Disconnected");

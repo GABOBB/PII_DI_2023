@@ -1,5 +1,7 @@
 package model;
 
+import com.sun.nio.sctp.SctpChannel;
+
 
 public class L_d_e {
     private N_d_e first;
@@ -13,7 +15,15 @@ public class L_d_e {
         this.last = null;
         this.size = 0;
     }
-
+    
+    public void prntL(){
+        N_d_e act = this.getFirst();
+        while(act != null){
+            System.out.println(act.getId() + " - ");
+            act = act.getN();
+        }
+    
+    }
     public void add_N(N_d_e newNode) {
         if (first == null) {
             first = newNode;
@@ -24,6 +34,28 @@ public class L_d_e {
             last = newNode;
         }
         size++;
+    }
+    
+    public void add_last(N_d_e N){
+        if(this.last != null){
+            this.last.setN(N);
+            N.setP(this.last);
+            this.last = N;
+        }else{
+            this.first = N;
+            this.last = N;
+            this.first.setN(N);
+            this.last.setP(N);         
+        }
+        this.size++;
+    }
+    
+    public void remove_first(){
+        N_d_e act = this.first.getN();
+        this.first.setN(null);
+        act.setP(null);
+        this.first = act;
+        this.size--;
     }
 
     public void remove_N(N_d_e nodeToRemove) {

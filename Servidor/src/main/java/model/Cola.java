@@ -1,0 +1,57 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model;
+
+/**
+ *
+ * @author Gabriel
+ */
+public class Cola {
+    private L_d_e elements;
+    private int max;
+    
+    public Cola(int m){
+        this.elements = new L_d_e("cola de platillos");
+        this.max = m;
+    }
+    
+    public boolean push(String i,Platillo p){    
+        if(this.elements.getSize() < this.max){
+            this.elements.add_last(new N_d_e(i,p));
+            return true;
+        }
+        return false;
+    }
+    
+    public N_d_e peek(){
+        return this.elements.getFirst();
+    }
+    
+    public N_d_e pop(){
+        N_d_e temp = this.elements.getFirst();
+        this.elements.remove_first();
+        return temp;
+    }
+    
+    public String get_elemts(){
+        String total = "###";
+        N_d_e N_act = this.elements.getFirst();
+        while(N_act != null){
+            String temp = "";
+            temp += N_act.getId() + ";";
+            Platillo p = (Platillo) N_act.getData();
+            temp += p.getId() + ";";
+            temp += p.getCalorias() + ";";
+            temp += p.getTiempo() + ";";
+            temp += p.getPrecio();
+            total += "###" + temp; 
+            
+            N_act = N_act.getN();
+        } 
+        String final_s;
+        final_s = (total.equals("###")) ? null : total;
+        return final_s;
+    }
+}
