@@ -25,7 +25,11 @@ import model.A_B_B;
 import model.Admin;
 import model.Cliente;
 import model.Cola;
+import model.L_d_e;
+import model.N_AVL;
 import model.N_B_B;
+import model.N_d_e;
+import model.Platillo;
 
 /**
  *
@@ -52,6 +56,7 @@ public class Servidor {
             this.on_server();
         }catch(Exception e){}        
     }
+    
     
     private void load_Admins(){
         try{
@@ -116,7 +121,7 @@ public class Servidor {
     } 
     
     public void load_Platillos(){
-        String JSON = leer("src/main/java/com/mycompany/servidor/Platillos.json");
+        //String JSON = leer("src/main/java/com/mycompany/servidor/Platillos.json");
         
         
     }
@@ -182,11 +187,11 @@ public class Servidor {
                     this.admns.getList().prntL();
                     out.writeUTF(this.admns.get_eA());
                 }else if(message.equals("get_pedidos")){
-                    String r = this.pedidos.get_elemts();
+                    //String r = this.pedidos.get_elemts();
                     
-                    if(r != null){
-                        out.writeUTF(r);
-                    }
+                        String t ="###hola;pinto;20;30;324";
+                        out.writeUTF(t);
+                    
                 }else if(message.startsWith("nuevo_pedido")){
                     String[] platillos = message.split("###");
                     for(String platillo : platillos){
@@ -194,6 +199,38 @@ public class Servidor {
                         String p = platillo.split(";")[0];
                         
                     }
+                }else if(message.startsWith("actualizar platillos")){
+                    this.platillos = new A_AVL(this.platillos.getId());
+                    String mesage[] = message.split("###");
+                    String platillos[] = new String[mesage.length-1];
+                    System.arraycopy(mesage,1,platillos,0,platillos.length);
+                    for(String platillo : platillos){
+                        String info[] = platillo.split(";");
+                        if(info.length == 4){
+                            Platillo P = new Platillo(info[0],
+                                                  Integer.parseInt(info[1]),
+                                                  Integer.parseInt(info[2]),
+                                                  Integer.parseInt(info[3]));
+                            N_AVL new_nodo = new N_AVL(info[0],P);
+                            this.platillos.insertar(new_nodo);
+                        }
+                    }
+                }else if(message.equals("get_platillos")){
+                    L_d_e L = this.platillos.getElements();
+                    N_d_e n = L.getFirst();
+                    String total = "";
+                    while(n != null){
+                        Platillo p = (Platillo) n.getData();
+                        String temp = "###";
+                        temp += p.getId() + ";"; 
+                        temp += p.getCalorias() + ";";
+                        temp += p.getTiempo() + ";";
+                        temp += p.getPrecio();
+                        total += temp;
+                        System.out.println(total);
+                        n = n.getN();
+                    }
+                    out.writeUTF(total);
                 }
                 clientSocket.close();
                 System.out.println("Client [1] Disconnected");

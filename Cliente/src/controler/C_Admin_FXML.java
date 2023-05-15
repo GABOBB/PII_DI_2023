@@ -54,6 +54,13 @@ public class C_Admin_FXML implements Initializable {
     @FXML
     private TextField LD_c_tf;
     
+    @FXML
+    private Button new_admin_bt;
+    @FXML
+    private Button delet_admin_bt;
+    @FXML
+    private Button modificar_admin_bt;
+    
 //############################################Cola de Pedidos############################################################
     @FXML
     private Button C_P_B;
@@ -61,26 +68,40 @@ public class C_Admin_FXML implements Initializable {
     private AnchorPane C_P_A_P;
     
     private ObservableList<Platillo> pedidos_en_cola;
+    @FXML
+    private TableView<Platillo> cola_tv;
+    @FXML
+    private TableColumn cola_cv;
+    @FXML
+    private Text time_label;
 //############################################Menu#######################################################################
     @FXML
     private Button M_B;
     @FXML
     private AnchorPane m_A_P;
+    
+    private ObservableList<Platillo> Menu_platillos_ol;
+    @FXML
+    private TableView<Platillo> Menu_tv;
+    @FXML
+    private TableColumn Menu_platillo_tc;
+    @FXML
+    private TextField Menu_id_tf;
+    @FXML
+    private TextField Menu_Precio_tf;
+    @FXML
+    private TextField Menu_Calorias_tf;
+    @FXML
+    private TextField Menu_TIempo_tf;
+    @FXML
+    private Button Menu_add_platillo_B;
+    @FXML
+    private Button Menu_delete_platillo_B;
+    @FXML
+    private Button Menu_Modificar_platillo_B;
 //############################################LOG OUT####################################################################
     @FXML
     private Button Log_OUT;
-    @FXML
-    private Button new_admin_bt;
-    @FXML
-    private Button delet_admin_bt;
-    @FXML
-    private Button modificar_admin_bt;
-    @FXML
-    private TableView<?> cola_tv;
-    @FXML
-    private TableColumn<?, ?> cola_cv;
-    @FXML
-    private Text time_label;
 
     
     /**
@@ -95,9 +116,14 @@ public class C_Admin_FXML implements Initializable {
         
         
     //######################administracion de usuarios############################################################
-        admins = FXCollections.observableArrayList();
+        this.admins = FXCollections.observableArrayList();
         this.LD_c.setCellValueFactory(new PropertyValueFactory("user"));
-    //######################administracion de usuarios############################################################
+    //######################cola de pedidos############################################################
+        this.pedidos_en_cola = FXCollections.observableArrayList();
+        this.cola_cv.setCellValueFactory(new PropertyValueFactory("id"));
+    //######################platillos en el menu#####################################################################
+        this.Menu_platillos_ol = FXCollections.observableArrayList();
+        this.Menu_platillo_tc.setCellValueFactory(new PropertyValueFactory("id"));
     }    
 
 
@@ -134,6 +160,7 @@ public class C_Admin_FXML implements Initializable {
         
         }else if(M_B == e.getSource()){
         
+            load_Menu();
             this.main_A_P.setVisible(false);
             this.C_P_A_P.setVisible(false);
             this.L_U_A_P.setVisible(false);
@@ -278,12 +305,13 @@ public class C_Admin_FXML implements Initializable {
 //###########################################metodos de cola de pedidos#################################################################
 
     private void load_pedidos(){
+        this.pedidos_en_cola.clear();
         String returned = Cliente.send("get_pedidos");
         if(returned != null){
             String pedidos[] = returned.split("###");
             if(pedidos != null){
-                for(String pedido : pedidos){
-
+                for(int x = 1; x < pedidos.length; x++){
+                    String pedido  = pedidos[x];
                     String[] i = pedido.split(";");
                     if(i.length == 5){
                         Platillo p = new Platillo(  i[0],
@@ -291,8 +319,9 @@ public class C_Admin_FXML implements Initializable {
                                                     Integer.parseInt(i[2]),
                                                     Integer.parseInt(i[3]),
                                                     Integer.parseInt(i[4]));
-
+                        this.pedidos_en_cola.add(p);
                     }
+                    this.cola_tv.setItems(this.pedidos_en_cola);
                 }
 
             }
@@ -302,7 +331,153 @@ public class C_Admin_FXML implements Initializable {
 
 
 //##########################################metodos del menu############################################################################   
-        @FXML
+    private void load_Menu(){
+        String PLATILLOS = Cliente.send("get_platillos");
+        if(PLATILLOS != null){
+            String aux[] = PLATILLOS.split("###");
+            String platillos[] = new String[aux.length-1];
+            System.arraycopy(aux, 1, platillos, 0, platillos.length);
+            for(String platillo : platillos){
+                String p[] = platillo.split(";");
+                Platillo N_P = new Platillo(p[0],
+                                            Integer.parseInt(p[1]),
+                                            Integer.parseInt(p[2]),
+                                            Integer.parseInt(p[3]));
+                this.Menu_platillos_ol.add(N_P);
+            }
+            this.Menu_tv.setItems(this.Menu_platillos_ol);
+        }
+    }
+    
+    @FXML
+    private void Menu_add_platillo(ActionEvent event) {
+        String id = this.Menu_id_tf.getText();
+        String cal = this.Menu_Calorias_tf.getText();
+        String tmp = this.Menu_TIempo_tf.getText();
+        String prc = this.Menu_Precio_tf.getText();
+        if(id == null || cal == null || tmp == null || prc == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error en los datos");
+            alert.setContentText("deve de rellenar todos los datos para poder anadir un platillos nuevo");
+            alert.showAndWait();
+            return;
+        }
+        try{
+            Platillo p = new Platillo(id,
+                                    Integer.parseInt(cal),
+                                    Integer.parseInt(tmp),
+                                    Integer.parseInt(prc));
+            if(!this.Menu_platillos_ol.contains(p)){
+                this.Menu_platillos_ol.add(p);
+                this.Menu_tv.setItems(this.Menu_platillos_ol);
+                Menu_to_string();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Error en los datos");
+                alert.setContentText("Este Platillo ya existe en el menu");
+                alert.showAndWait();
+            
+            }
+            
+        }catch(Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error en los datos");
+            alert.setContentText("Existe un error en los datos introducidos");
+            alert.showAndWait();
+        
+        }
+    }
+
+    @FXML
+    private void Menu_delete_platillo(ActionEvent event) {
+        Platillo P = this.Menu_tv.getSelectionModel().getSelectedItem();
+        if(P == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("deve de seleccionar para eliminarlo");
+            alert.showAndWait();
+        
+        }else{
+            this.Menu_platillos_ol.remove(P);
+            this.Menu_tv.refresh();
+            this.Menu_id_tf.setText(null);
+            this.Menu_Calorias_tf.setText(null);
+            this.Menu_TIempo_tf.setText(null);
+            this.Menu_Precio_tf.setText(null);
+            Menu_to_string();
+        
+        }
+    }
+
+    @FXML
+    private void Menu_Modificar_platillo(ActionEvent event) {
+        Platillo p = this.Menu_tv.getSelectionModel().getSelectedItem();
+        if(p == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("deve de seleccionar un platillo para modificarlo");
+            alert.showAndWait();
+        }else{
+            String id = this.Menu_id_tf.getText();
+            int calorias = Integer.parseInt(this.Menu_Calorias_tf.getText());
+            int tiempo = Integer.parseInt(this.Menu_TIempo_tf.getText());
+            int precio = Integer.parseInt(this.Menu_Precio_tf.getText());
+            
+            Platillo aux = new Platillo(id,calorias,tiempo,precio);
+            
+            if(!this.Menu_platillos_ol.contains(aux)){
+                p.setId(id);
+                p.setCalorias(calorias);
+                p.setTiempo(tiempo);
+                p.setPrecio(precio);
+                
+                this.Menu_tv.refresh();
+                Menu_to_string();
+            
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Error");
+                alert.setContentText("Este platillo ya existe en el menu");
+                alert.showAndWait();
+            
+            } 
+            
+        }        
+    }
+
+    @FXML
+    private void menu_selecionar_platillo(MouseEvent event) {
+        
+        Platillo p = this.Menu_tv.getSelectionModel().getSelectedItem();
+        this.Menu_id_tf.setText(p.getId());
+        this.Menu_Calorias_tf.setText(p.getCalorias()+"");
+        this.Menu_TIempo_tf.setText(p.getTiempo()+"");
+        this.Menu_Precio_tf.setText(p.getPrecio()+"");
+    }
+    
+    private void Menu_to_string(){
+        String total = "actualizar platillos";
+        for(Platillo p : this.Menu_platillos_ol){
+            
+            String temp = "###";
+            temp += p.getId() + ";";
+            temp += p.getCalorias() + ";";
+            temp += p.getTiempo() + ";";
+            temp += p.getPrecio();
+            
+            total += temp;
+        }
+        Cliente.send(total);
+    }
+    
+//#########################################metodos de cerrar ventana####################################################################
+    @FXML
     public void closeTab(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/visual/login_FXML.fxml"));
@@ -327,6 +502,8 @@ public class C_Admin_FXML implements Initializable {
     }
     
     public void set_stage(Stage e){this.stg = e;}
+
+
 
 
 

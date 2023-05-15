@@ -89,4 +89,7 @@ public class A_AVL{
 
         return x;
     }
+    
+    public L_d_e getElements(){return this.elements;}
+    public String getId(){return this.id;}
 }

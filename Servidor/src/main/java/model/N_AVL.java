@@ -21,7 +21,13 @@ public class N_AVL {
         this.altura= 0;
         this.balance=0;
     } 
-
+    
+    public N_AVL(String id, Platillo p){
+        this.id= id;
+        this.platillo = p;
+        this.altura= 0;
+        this.balance=0;
+    }
     public Platillo getPlatillo(){return this.platillo;}
     public String getId() {return this.id;}
     public N_AVL getRT() {return this.RT;}

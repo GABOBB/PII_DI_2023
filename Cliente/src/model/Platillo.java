@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.Objects;
+
 /**
  *
  * @author Gabriel
@@ -29,6 +31,36 @@ public class Platillo {
         this.tiempo = t;
         this.precio = p;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Platillo other = (Platillo) obj;
+        if (this.calorias != other.calorias) {
+            return false;
+        }
+        if (this.tiempo != other.tiempo) {
+            return false;
+        }
+        if (this.precio != other.precio) {
+            return false;
+        }
+        return Objects.equals(this.id, other.id);
+    }
     public void setIdu(String idu){this.id_user = idu;}
     public void setId(String id){this.id = id;}
     public void setTiempo(int tiempo){this.tiempo = tiempo;}
@@ -40,9 +72,5 @@ public class Platillo {
     public int getTiempo(){return this.tiempo;}
     public int getPrecio(){return this.precio;}
     public int getCalorias(){return this.calorias;}
-    
-    
-    
-
-    
+  
 }

@@ -108,7 +108,7 @@
                </font></Text>
             <TableView fx:id="cola_tv" layoutX="20.0" layoutY="62.0" prefHeight="318.0" prefWidth="280.0" style="-fx-background-color: #00c3ff;">
               <columns>
-                <TableColumn fx:id="cola_cv" prefWidth="279.0" style="-fx-text-fill: #222222; -fx-border-color: #222222;" text="C1" />
+                <TableColumn fx:id="cola_cv" editable="false" prefWidth="279.0" sortable="false" style="-fx-text-fill: #222222; -fx-border-color: #222222; -fx-background-color: #00c3ff;" text="pedidos" />
               </columns>
             </TableView>
             <Text fx:id="time_label" fill="#00c3ff" layoutX="319.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00" wrappingWidth="130.4384765625">
@@ -118,22 +118,41 @@
             </Text>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="m_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #222222;" visible="false">
+      <AnchorPane fx:id="m_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #222222;">
          <children>
             <Text fill="#00c3ff" layoutX="7.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu">
                <font>
                   <Font size="34.0" />
                </font>
             </Text>
-            <TableView layoutX="270.0" layoutY="22.0" prefHeight="370.0" prefWidth="193.0" style="-fx-background-color: #353535; -fx-border-color: #00c3ff;">
+            <TableView fx:id="Menu_tv" layoutX="270.0" layoutY="22.0" onMouseClicked="#menu_selecionar_platillo" prefHeight="370.0" prefWidth="193.0" style="-fx-background-color: #353535; -fx-border-color: #00c3ff;">
               <columns>
-                <TableColumn prefWidth="199.0" style="-fx-background-color: #00c3ff;" text="Platillos" />
+                <TableColumn fx:id="Menu_platillo_tc" editable="false" prefWidth="199.0" sortable="false" style="-fx-background-color: #00c3ff; -fx-border-color: #303030; -fx-text-fill: #303030;" text="Platillos" />
               </columns>
             </TableView>
-            <TextField layoutX="20.0" layoutY="133.0" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #353535;" />
-            <TextField layoutX="20.0" layoutY="169.0" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #353535;" />
-            <TextField layoutX="20.0" layoutY="204.0" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #353535;" />
-            <TextField layoutX="20.0" layoutY="242.0" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #353535;" />
+            <TextField fx:id="Menu_id_tf" layoutX="50.0" layoutY="159.0" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #353535; -fx-text-fill: #00c3ff;" />
+            <TextField fx:id="Menu_Precio_tf" layoutX="50.0" layoutY="201.0" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #353535; -fx-text-fill: #00c3ff;" />
+            <TextField fx:id="Menu_Calorias_tf" layoutX="50.0" layoutY="244.0" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #353535; -fx-text-fill: #00c3ff;" />
+            <TextField fx:id="Menu_TIempo_tf" layoutX="50.0" layoutY="288.0" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #353535; -fx-text-fill: #00c3ff;" />
+            <Button fx:id="Menu_add_platillo_B" layoutX="23.0" layoutY="339.0" mnemonicParsing="false" onAction="#Menu_add_platillo" prefHeight="44.0" prefWidth="44.0" style="-fx-background-color: #333333;" text="+" textFill="#00c3ff">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="Menu_delete_platillo_B" layoutX="77.0" layoutY="339.0" mnemonicParsing="false" onAction="#Menu_delete_platillo" prefHeight="44.0" prefWidth="44.0" style="-fx-background-color: #333333;" text="-" textFill="#00c3ff">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="Menu_Modificar_platillo_B" layoutX="134.0" layoutY="339.0" mnemonicParsing="false" onAction="#Menu_Modificar_platillo" prefHeight="44.0" prefWidth="114.0" style="-fx-background-color: #333333;" text="modificar" textFill="#00c3ff">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Text fill="#00c3ff" layoutX="20.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" wrappingWidth="64.13671875" />
+            <Text fill="#00c3ff" layoutX="20.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio:" wrappingWidth="64.13671875" />
+            <Text fill="#00c3ff" layoutX="20.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Calorias:" wrappingWidth="64.13671875" />
+            <Text fill="#00c3ff" layoutX="20.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tiempo:" wrappingWidth="64.13671875" />
          </children>
       </AnchorPane>
    </children>
