@@ -29,6 +29,8 @@ public class Platillo {
         this.tiempo = t;
         this.precio = p;
     }
+    
+    public String getUID(){return this.id_user;}
 
     public String getId() {
         return id;

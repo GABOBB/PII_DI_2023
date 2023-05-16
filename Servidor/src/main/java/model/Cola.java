@@ -59,5 +59,6 @@ public class Cola {
         }
     }
     
+    public L_d_e get_list(){return this.elements;}
     public int getSize(){return this.elements.getSize();}
 }

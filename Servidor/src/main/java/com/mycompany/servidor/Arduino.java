@@ -9,4 +9,6 @@ package com.mycompany.servidor;
  * @author Gabriel
  */
 public class Arduino {
+    //  private SerialPort ardn_prt;
+    
 }

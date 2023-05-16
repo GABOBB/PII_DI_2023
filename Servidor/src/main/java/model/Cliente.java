@@ -16,13 +16,12 @@ public class Cliente extends Admin {
 
     public Cliente(String user, String pssw){
         super(user, pssw);
-        
+        this.LDP = new L_d_e("pedidos");
     }
     
     public void load_L(){
     
     }
     
-    
-    
+    public L_d_e get_list(){return this.LDP;}
 }

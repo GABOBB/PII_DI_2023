@@ -203,12 +203,10 @@ public class Servidor {
                                                           Integer.parseInt(P.split(";")[1]),
                                                           Integer.parseInt(P.split(";")[2]),
                                                           Integer.parseInt(P.split(";")[3]));
-                            boolean bol = this.pedidos.push(P.split(";")[0], NEW_P);
-                            if(bol){
-                                System.out.println("si se a;adio");
-                            }else{
-                                System.out.println("no se a;adio ni mierda");
-                            }
+                            N_d_e newN = new N_d_e(NEW_P.getId(),NEW_P);
+                            this.usruario.get_list().add_N(newN); 
+                            this.pedidos.push(P.split(";")[0], NEW_P);
+                          
                         }
                         System.out.println("@@@");
                         System.out.println(this.pedidos.get_elemts());
@@ -250,6 +248,39 @@ public class Servidor {
                     }else{
                         out.writeUTF("");
                     }
+                }else if(message.equals("get_activos")){
+                    N_d_e act = this.pedidos.get_list().getFirst();
+                    String total = "";
+                    while(act != null){
+                        Platillo P = (Platillo) act.getData();
+                        String user = P.getUID();
+                        if(user.equals(this.usruario.getU())){
+                            String temp = "###";
+                            temp += P.getId() + ";"; 
+                            temp += P.getCalorias() + ";";
+                            temp += P.getTiempo() + ";";
+                            temp += P.getPrecio();
+                            total += temp;
+                        }
+                        act = act.getN();
+                    }
+                    out.writeUTF(total);
+                }else if(message.equals("get_historial")){
+                    L_d_e list = this.usruario.get_list();
+                    N_d_e act = list.getFirst();
+                    String total = "";
+                    while(act != null){
+                        Platillo P = (Platillo) act.getData();
+                            String temp = "###";
+                            temp += P.getId() + ";"; 
+                            temp += P.getCalorias() + ";";
+                            temp += P.getTiempo() + ";";
+                            temp += P.getPrecio();
+                            total += temp;
+                        
+                        act = act.getN();
+                    }
+                    out.writeUTF(total);
                 }
                 clientSocket.close();
                 System.out.println("Client [1] Disconnected");
