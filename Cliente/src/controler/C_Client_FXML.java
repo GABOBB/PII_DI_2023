@@ -3,6 +3,7 @@ package controler;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,12 +11,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Platillo;
@@ -39,28 +42,38 @@ public class C_Client_FXML implements Initializable {
     @FXML
     private Button B_realizar_pedidos;
     
-    @FXML
-    private TableView<Platillo> Lista_de_pedidos_act_tv;
-    @FXML
-    private TableColumn c_platillos_tc;
     
-    private ObservableList<Platillo> platillos;
+    private ObservableList<Platillo> pedir_platillos_anadidos;
     
-    @FXML
     private ComboBox<Platillo> CB_platillos;
+    
+     @FXML
+    private ComboBox<Platillo> pedir_CB_platillos = new ComboBox<>();
     @FXML
-    private TextField Nomnbre_pedido_tf;
+    private TableView<Platillo> pedir_Lista_de_pedidos_act_tv;
     @FXML
-    private TextField calorias_pedido_tf;
+    private TableColumn pedir_c_platillos_tc;
     @FXML
-    private TextField precio_pedido_tf;
+    private TextField pedir_Nomnbre_pedido_tf;
     @FXML
-    private TextField tiempo_pedido_tf;
+    private TextField pedir_calorias_pedido_tf;
+    @FXML
+    private TextField pedir_precio_pedido_tf;
+    @FXML
+    private TextField pedir_tiempo_pedido_tf;
+    @FXML
+    private Button pedir_anadir_a_pedido_bt;
+    @FXML
+    private Button pedir_eliminar_platillo_bt;
+    @FXML
+    private Button pedir_mandar_pedido_bt;
 //##############################################Pedidos Activos#################################################
     @FXML
     private AnchorPane Pedidos_Activos_AP;
     @FXML
     private Button B_pedidos_activos;
+
+   
 //##############################################Historial#######################################################
     @FXML
     private AnchorPane Historial_Pedidos_AP;
@@ -69,6 +82,7 @@ public class C_Client_FXML implements Initializable {
 //##############################################################################################################
     @FXML
     private Button B_log_out;
+
 
 
 
@@ -84,7 +98,8 @@ public class C_Client_FXML implements Initializable {
         this.Historial_Pedidos_AP.setVisible(false);
         
         //##########################################hacer pedidos###############################################
-        this.CB_platillos.setItems(platillos);
+        this.pedir_platillos_anadidos = FXCollections.observableArrayList();
+        this.pedir_c_platillos_tc.setCellValueFactory(new PropertyValueFactory("id"));
         
     }    
     
@@ -157,23 +172,72 @@ public class C_Client_FXML implements Initializable {
 //##############################################Realizar Pedidos################################################
     public void loadPlatillos(){
     String PLATILLOS = Cliente.send("get_platillos");
-        if(platillos != null){
-            String platillos[] = PLATILLOS.split("###");
+        System.out.println(PLATILLOS);
+        if(PLATILLOS != null){
+            String Platillos = PLATILLOS.substring(3);
+            String platillos[] = Platillos.split("###");
+            
             for(String sp : platillos){
+                System.out.println(sp);
                 String auxp[] = sp.split(";");
                 String id = auxp[0];
                 int c = Integer.parseInt(auxp[1]);
                 int t = Integer.parseInt(auxp[2]);
                 int p = Integer.parseInt(auxp[3]);
                 Platillo P = new Platillo(id,c,t,p); 
-                this.CB_platillos.getItems().add(P);
+                this.pedir_CB_platillos.getItems().add(P);
             }
             
         }
+    }
+    @FXML
+    private void pedir_seleccionar_platillo(ActionEvent event) {
+        Platillo p = this.pedir_CB_platillos.getValue();
+        this.pedir_Nomnbre_pedido_tf.setText(p.getId());
+        this.pedir_precio_pedido_tf.setText("$"+p.getPrecio());
+        this.pedir_calorias_pedido_tf.setText(p.getCalorias()+"cal");
+        this.pedir_tiempo_pedido_tf.setText(p.getTiempo()+"s");
+    }
+
+    @FXML
+    private void pedir_anadir_platillo(ActionEvent event) {
+        Platillo p = this.pedir_CB_platillos.getValue();
+        this.pedir_platillos_anadidos.add(p);
+        this.pedir_Lista_de_pedidos_act_tv.setItems(pedir_platillos_anadidos);
+    }
+
+
+    @FXML
+    private void pedir_eliminar_platillo(ActionEvent event) {
+        Platillo p = this.pedir_Lista_de_pedidos_act_tv.getSelectionModel().getSelectedItem();
+        if(this.pedir_platillos_anadidos.contains(p)){
+            this.pedir_platillos_anadidos.remove(p);
+            this.pedir_Lista_de_pedidos_act_tv.refresh();
+            this.pedir_Nomnbre_pedido_tf.setText(null);
+            this.pedir_calorias_pedido_tf.setText(null);
+            this.pedir_precio_pedido_tf.setText(null);
+            this.pedir_tiempo_pedido_tf.setText(null);
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error en los datos");
+            alert.setContentText("");
+            alert.showAndWait();
+        
+        }
+    }
+
+    @FXML
+    private void pedir_mandar_pedido(ActionEvent event) {
     }
 
 //##############################################Pedidos Activos#################################################
 
 
 //##############################################Historial#######################################################
+
+    
+
+
+
 }

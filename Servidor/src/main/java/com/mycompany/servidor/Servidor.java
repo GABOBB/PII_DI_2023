@@ -41,7 +41,7 @@ public class Servidor {
     A_AVL platillos;
     Cola pedidos;
     
-    Object usruario;
+    Cliente usruario;
     
     public Servidor(){
         try{
@@ -159,10 +159,9 @@ public class Servidor {
                     String u=message.split(" ")[1];
                     String p=message.split(" ")[2];
                     if(this.buscarAdmin(u,p)){
-                        this.usruario = this.admns.srch_id(u);
                         out.writeUTF("Admin");
                     }else if(this.buscarCliente(u,p)){
-                        this.usruario = this.clnts.srch_id(u);
+                        this.usruario = (Cliente) this.clnts.srch_id(u).getData();
                         out.writeUTF("Cliente");
                     }else{
                         out.writeUTF("No encontrado");
