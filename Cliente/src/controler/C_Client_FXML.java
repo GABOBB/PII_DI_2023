@@ -171,32 +171,40 @@ public class C_Client_FXML implements Initializable {
     
 //##############################################Realizar Pedidos################################################
     public void loadPlatillos(){
-    String PLATILLOS = Cliente.send("get_platillos");
-        System.out.println(PLATILLOS);
-        if(PLATILLOS != null){
-            String Platillos = PLATILLOS.substring(3);
-            String platillos[] = Platillos.split("###");
-            
-            for(String sp : platillos){
-                System.out.println(sp);
-                String auxp[] = sp.split(";");
-                String id = auxp[0];
-                int c = Integer.parseInt(auxp[1]);
-                int t = Integer.parseInt(auxp[2]);
-                int p = Integer.parseInt(auxp[3]);
-                Platillo P = new Platillo(id,c,t,p); 
-                this.pedir_CB_platillos.getItems().add(P);
-            }
-            
+        try{
+        this.pedir_CB_platillos.getItems().clear();
+        String PLATILLOS = Cliente.send("get_platillos");
+            System.out.println(PLATILLOS);
+                if(PLATILLOS != null){
+                    String Platillos = PLATILLOS.substring(3);
+                    String platillos[] = Platillos.split("###");
+
+                    for(String sp : platillos){
+                        System.out.println(sp);
+                        String auxp[] = sp.split(";");
+                        String id = auxp[0];
+                        int c = Integer.parseInt(auxp[1]);
+                        int t = Integer.parseInt(auxp[2]);
+                        int p = Integer.parseInt(auxp[3]);
+                        Platillo P = new Platillo(id,c,t,p); 
+                        this.pedir_CB_platillos.getItems().add(P);
+                    }
+
+                }
+        }catch(Exception e){
+            //e.printStackTrace();
         }
     }
+    
     @FXML
     private void pedir_seleccionar_platillo(ActionEvent event) {
         Platillo p = this.pedir_CB_platillos.getValue();
-        this.pedir_Nomnbre_pedido_tf.setText(p.getId());
-        this.pedir_precio_pedido_tf.setText("$"+p.getPrecio());
-        this.pedir_calorias_pedido_tf.setText(p.getCalorias()+"cal");
-        this.pedir_tiempo_pedido_tf.setText(p.getTiempo()+"s");
+        if(p!=null){
+            this.pedir_Nomnbre_pedido_tf.setText(p.getId());
+            this.pedir_precio_pedido_tf.setText("$"+p.getPrecio());
+            this.pedir_calorias_pedido_tf.setText(p.getCalorias()+"cal");
+            this.pedir_tiempo_pedido_tf.setText(p.getTiempo()+"s");
+        }
     }
 
     @FXML
@@ -229,6 +237,15 @@ public class C_Client_FXML implements Initializable {
 
     @FXML
     private void pedir_mandar_pedido(ActionEvent event) {
+        String total = "nuevo_pedido";
+        for(Platillo p : this.pedir_platillos_anadidos){
+            String temp = "###";
+            temp+=p.getId()+";";
+            temp+=p.getCalorias()+";";
+            temp+=p.getTiempo()+";";
+            temp+=p.getPrecio();
+        }
+        Cliente.send(total);
     }
 
 //##############################################Pedidos Activos#################################################

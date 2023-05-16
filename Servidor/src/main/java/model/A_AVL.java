@@ -92,4 +92,5 @@ public class A_AVL{
     
     public L_d_e getElements(){return this.elements;}
     public String getId(){return this.id;}
+    public int getSice(){return this.size;}
 }

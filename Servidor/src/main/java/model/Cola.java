@@ -50,8 +50,12 @@ public class Cola {
             
             N_act = N_act.getN();
         } 
-        String final_s;
-        final_s = (total.equals("###")) ? null : total;
-        return final_s;
+        if(total.equals("###")){
+            return null;
+        }else{
+            return total;
+        }
     }
+    
+    public int getSize(){return this.elements.getSize();}
 }

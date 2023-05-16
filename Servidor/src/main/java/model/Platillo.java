@@ -10,6 +10,7 @@ package model;
  */
 public class Platillo {
     private String id;
+    private String id_user;
     private int calorias;
     private int tiempo;
     private int precio;
@@ -19,6 +20,14 @@ public class Platillo {
     this.calorias = c;
     this.tiempo = t;
     this.precio = p;
+    }
+    
+    public Platillo(String id_u, String id, int c, int t, int p){
+        this.id_user = id_u;
+        this.id = id;
+        this.calorias = c;
+        this.tiempo = t;
+        this.precio = p;
     }
 
     public String getId() {

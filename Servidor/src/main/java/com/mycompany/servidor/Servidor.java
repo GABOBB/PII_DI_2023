@@ -186,17 +186,29 @@ public class Servidor {
                     this.admns.getList().prntL();
                     out.writeUTF(this.admns.get_eA());
                 }else if(message.equals("get_pedidos")){
-                    //String r = this.pedidos.get_elemts();
-                    
-                        String t ="###hola;pinto;20;30;324";
-                        out.writeUTF(t);
-                    
+                    if(this.pedidos.getSize()>0){
+                        String r = this.pedidos.get_elemts();
+                        System.out.println(r);
+                        out.writeUTF(r);
+                    }else{
+                        out.writeUTF("");
+                    }
                 }else if(message.startsWith("nuevo_pedido")){
                     String[] platillos = message.split("###");
-                    for(String platillo : platillos){
-                        
-                        String p = platillo.split(";")[0];
-                        
+                    if(platillos.length>=1){
+                        for(int I = 1;I<platillos.length; I++){
+                            String P = platillos[I];
+                            Platillo NEW_P = new Platillo(this.usruario.getU(),
+                                                          P.split(";")[0],
+                                                          Integer.parseInt(P.split(";")[1]),
+                                                          Integer.parseInt(P.split(";")[2]),
+                                                          Integer.parseInt(P.split(";")[3]));
+                            this.pedidos.push(P.split(";")[0], NEW_P);
+                            
+                        }
+                        System.out.println("@@@");
+                        System.out.println(this.pedidos.get_elemts());
+                        System.out.println("@@@");
                     }
                 }else if(message.startsWith("actualizar platillos")){
                     this.platillos = new A_AVL(this.platillos.getId());
@@ -229,7 +241,11 @@ public class Servidor {
                         System.out.println(total);
                         n = n.getN();
                     }
-                    out.writeUTF(total);
+                    if(total != null){
+                        out.writeUTF(total);
+                    }else{
+                        out.writeUTF("");
+                    }
                 }
                 clientSocket.close();
                 System.out.println("Client [1] Disconnected");
