@@ -29,7 +29,7 @@
             </Text>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="hacer_pedidos_AP" layoutX="112.0" prefHeight="400.0" prefWidth="494.0" style="-fx-background-color: #404040;">
+      <AnchorPane fx:id="hacer_pedidos_AP" layoutX="112.0" prefHeight="400.0" prefWidth="494.0" style="-fx-background-color: #404040;" visible="false">
          <children>
             <ComboBox fx:id="pedir_CB_platillos" layoutX="35.0" layoutY="120.0" onAction="#pedir_seleccionar_platillo" prefWidth="150.0" promptText="Platillos" style="-fx-border-color: #00c3ff; -fx-background-color: #00c3ff;" />
             <TableView fx:id="pedir_Lista_de_pedidos_act_tv" layoutX="278.0" layoutY="12.0" prefHeight="379.0" prefWidth="208.0" style="-fx-background-color: #202020;">
@@ -63,8 +63,32 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Pedidos_Activos_AP" layoutX="111.0" prefHeight="400.0" prefWidth="494.0" style="-fx-background-color: #303030;" visible="false" />
-      <AnchorPane fx:id="Historial_Pedidos_AP" layoutX="111.0" prefHeight="400.0" prefWidth="494.0" style="-fx-background-color: #202020;" visible="false" />
+      <AnchorPane fx:id="Pedidos_Activos_AP" layoutX="111.0" prefHeight="400.0" prefWidth="494.0" style="-fx-background-color: #303030;" visible="false">
+         <children>
+            <Text fill="#00c3ff" layoutX="14.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pedidos activos">
+               <font>
+                  <Font size="46.0" />
+               </font>
+            </Text>
+            <TableView fx:id="activos_TV" layoutX="43.0" layoutY="74.0" prefHeight="308.0" prefWidth="244.0" style="-fx-background-color: #202020;">
+              <columns>
+                <TableColumn fx:id="activos_TC" prefWidth="243.0" text="Pedidos " />
+              </columns>
+            </TableView>
+         </children></AnchorPane>
+      <AnchorPane fx:id="Historial_Pedidos_AP" layoutX="111.0" prefHeight="400.0" prefWidth="494.0" style="-fx-background-color: #202020;">
+         <children>
+            <Text fill="#00c3ff" layoutX="29.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Historial de pedidos">
+               <font>
+                  <Font size="44.0" />
+               </font>
+            </Text>
+            <TableView fx:id="historial_tv" layoutX="167.0" layoutY="65.0" prefHeight="316.0" prefWidth="300.0" style="-fx-background-color: #353535;">
+              <columns>
+                <TableColumn fx:id="historial_tc" prefWidth="299.0" style="-fx-background-color: #353535; -fx-text-fill: #00c3ff;" text="Historico" />
+              </columns>
+            </TableView>
+         </children></AnchorPane>
       <VBox prefHeight="400.0" prefWidth="125.0">
          <children>
             <Button fx:id="B_main" mnemonicParsing="false" onAction="#select_window" prefHeight="84.0" prefWidth="143.0" style="-fx-background-color: #00c3ff;" text="TableTech">

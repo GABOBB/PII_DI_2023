@@ -73,7 +73,7 @@ public class C_Admin_FXML implements Initializable {
     @FXML
     private TableColumn cola_cv;
     @FXML
-    private Text time_label;
+    private Text cola_time_label;
 //############################################Menu#######################################################################
     @FXML
     private Button M_B;
@@ -102,6 +102,7 @@ public class C_Admin_FXML implements Initializable {
 //############################################LOG OUT####################################################################
     @FXML
     private Button Log_OUT;
+    
 
     
     /**
@@ -305,6 +306,7 @@ public class C_Admin_FXML implements Initializable {
 //###########################################metodos de cola de pedidos#################################################################
 
     private void load_pedidos(){
+        int time = 0;
         this.pedidos_en_cola.clear();
         String returned = Cliente.send("get_pedidos");
         if(returned != null){
@@ -314,6 +316,7 @@ public class C_Admin_FXML implements Initializable {
                     String pedido  = pedidos[x];
                     String[] i = pedido.split(";");
                     if(i.length == 5){
+                        time += Integer.parseInt(i[2]);
                         Platillo p = new Platillo(  i[0],
                                                     i[1],
                                                     Integer.parseInt(i[2]),
@@ -321,8 +324,12 @@ public class C_Admin_FXML implements Initializable {
                                                     Integer.parseInt(i[4]));
                         this.pedidos_en_cola.add(p);
                     }
-                    this.cola_tv.setItems(this.pedidos_en_cola);
+                    
+                
                 }
+                this.cola_tv.setItems(this.pedidos_en_cola);
+                System.out.println(time+"");
+                this.cola_time_label.setText((time/60)+":"+(time%60));
 
             }
         }

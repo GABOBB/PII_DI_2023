@@ -203,8 +203,12 @@ public class Servidor {
                                                           Integer.parseInt(P.split(";")[1]),
                                                           Integer.parseInt(P.split(";")[2]),
                                                           Integer.parseInt(P.split(";")[3]));
-                            this.pedidos.push(P.split(";")[0], NEW_P);
-                            
+                            boolean bol = this.pedidos.push(P.split(";")[0], NEW_P);
+                            if(bol){
+                                System.out.println("si se a;adio");
+                            }else{
+                                System.out.println("no se a;adio ni mierda");
+                            }
                         }
                         System.out.println("@@@");
                         System.out.println(this.pedidos.get_elemts());

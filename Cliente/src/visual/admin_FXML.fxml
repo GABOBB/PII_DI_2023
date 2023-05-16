@@ -100,7 +100,7 @@
             <AnchorPane layoutX="272.0" layoutY="14.0" prefHeight="51.0" prefWidth="193.0" style="-fx-background-color: #444444;" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="C_P_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #333333;" visible="false">
+      <AnchorPane fx:id="C_P_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #333333;">
          <children>
             <Text fill="#00c3ff" layoutX="11.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cola de Pedidos">
                <font>
@@ -111,14 +111,14 @@
                 <TableColumn fx:id="cola_cv" editable="false" prefWidth="279.0" sortable="false" style="-fx-text-fill: #222222; -fx-border-color: #222222; -fx-background-color: #00c3ff;" text="pedidos" />
               </columns>
             </TableView>
-            <Text fx:id="time_label" fill="#00c3ff" layoutX="319.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00" wrappingWidth="130.4384765625">
+            <Text fx:id="cola_time_label" fill="#00c3ff" layoutX="319.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00" wrappingWidth="130.4384765625">
                <font>
                   <Font size="37.0" />
                </font>
             </Text>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="m_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #222222;">
+      <AnchorPane fx:id="m_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #222222;" visible="false">
          <children>
             <Text fill="#00c3ff" layoutX="7.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu">
                <font>

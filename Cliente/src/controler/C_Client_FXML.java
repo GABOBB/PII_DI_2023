@@ -72,16 +72,32 @@ public class C_Client_FXML implements Initializable {
     private AnchorPane Pedidos_Activos_AP;
     @FXML
     private Button B_pedidos_activos;
-
+    
+    private ObservableList<Platillo> activos_ol;
+    
+    @FXML
+    private TableView<Platillo> activos_TV;
+    @FXML
+    private TableColumn activos_TC;
    
 //##############################################Historial#######################################################
     @FXML
     private AnchorPane Historial_Pedidos_AP;
+    
+    private ObservableList<Platillo> historial_ol;
+    
+    @FXML
+    private TableView<Platillo> historial_tv;
+    @FXML
+    private TableColumn historial_tc;
     @FXML
     private Button B_historial;
 //##############################################################################################################
     @FXML
     private Button B_log_out;
+    
+    
+    
 
 
 
@@ -100,34 +116,14 @@ public class C_Client_FXML implements Initializable {
         //##########################################hacer pedidos###############################################
         this.pedir_platillos_anadidos = FXCollections.observableArrayList();
         this.pedir_c_platillos_tc.setCellValueFactory(new PropertyValueFactory("id"));
-        
+        //##########################################activos#####################################################
+        this.activos_ol = FXCollections.observableArrayList();
+        this.activos_TC.setCellValueFactory(new PropertyValueFactory("id"));
+        //##########################################historial###################################################
+        this.historial_ol = FXCollections.observableArrayList();
+        this.historial_tc.setCellValueFactory(new PropertyValueFactory("id"));
     }    
-    
-    
-    
-    @FXML
-    public void closeTab(){
-        try{
-           FXMLLoader loader = new FXMLLoader(getClass().getResource("/visual/login_FXML.fxml"));
 
-               Parent root = loader.load();
-
-               C_Login_FXML controlador = loader.getController();
-
-               Scene scene = new Scene(root);
-               Stage stage = new Stage();
-  
-               controlador.set_stage(stage);
-               
-               stage.setScene(scene);
-
-               stage.show();
-
-               this.stg.close();
-        }catch(IOException e){
-        
-        }
-    }
     
     public void set_stage(Stage e){this.stg = e;}
 
@@ -150,13 +146,15 @@ public class C_Client_FXML implements Initializable {
             
         }else if(e.getSource() == this.B_pedidos_activos){
         
+            this.loadActivos();
             this.Main_AP.setVisible(false);
             this.hacer_pedidos_AP.setVisible(false);
             this.Pedidos_Activos_AP.setVisible(true);
             this.Historial_Pedidos_AP.setVisible(false);
             
         }else if(e.getSource() == this.B_historial){
-        
+            
+            this.loadHistorial();
             this.Main_AP.setVisible(false);
             this.hacer_pedidos_AP.setVisible(false);
             this.Pedidos_Activos_AP.setVisible(false);
@@ -244,17 +242,66 @@ public class C_Client_FXML implements Initializable {
             temp+=p.getCalorias()+";";
             temp+=p.getTiempo()+";";
             temp+=p.getPrecio();
+            total += temp;
         }
+        System.out.println(total);
         Cliente.send(total);
     }
 
 //##############################################Pedidos Activos#################################################
-
+    private void loadActivos(){
+        String PEDIDOS_ACTIVOS = Cliente.send("get_activos");
+        if(PEDIDOS_ACTIVOS==null){return;}
+        PEDIDOS_ACTIVOS = PEDIDOS_ACTIVOS.substring(3);
+        String P_A[] = PEDIDOS_ACTIVOS.split("###");
+        for(String p : P_A){
+            Platillo NEW_P = new Platillo(p.split(";")[0],Integer.parseInt(p.split(";")[1]),
+                                                          Integer.parseInt(p.split(";")[2]),
+                                                          Integer.parseInt(p.split(";")[3]));
+            this.activos_ol.add(NEW_P);
+        }
+        this.activos_TV.setItems(activos_ol);
+    }
 
 //##############################################Historial#######################################################
-
+    private void loadHistorial() {
+        String historial = Cliente.send("get_historial");
+        if(historial == null){return;}
+        
+        historial = historial.substring(3);
+        
+        String HS[] = historial.split("###");
+        for(String hs : HS){
+            Platillo NEW_P = new Platillo(hs.split(";")[0],Integer.parseInt(hs.split(";")[1]),
+                                                          Integer.parseInt(hs.split(";")[2]),
+                                                          Integer.parseInt(hs.split(";")[3]));
+            this.historial_ol.add(NEW_P);
+        }
+        this.historial_tv.setItems(historial_ol);
+    }
     
+//##############################################log_OUT#33333333333333333333333333333333333333333333333333333####
+    @FXML
+    public void closeTab(){
+        try{
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("/visual/login_FXML.fxml"));
 
+               Parent root = loader.load();
 
+               C_Login_FXML controlador = loader.getController();
 
+               Scene scene = new Scene(root);
+               Stage stage = new Stage();
+  
+               controlador.set_stage(stage);
+               
+               stage.setScene(scene);
+
+               stage.show();
+
+               this.stg.close();
+        }catch(IOException e){
+        
+        }
+    }
 }

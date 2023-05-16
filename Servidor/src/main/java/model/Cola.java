@@ -20,8 +20,10 @@ public class Cola {
     public boolean push(String i,Platillo p){    
         if(this.elements.getSize() < this.max){
             this.elements.add_last(new N_d_e(i,p));
+            System.out.println("si se pudo agregar");
             return true;
-        }
+        } 
+        System.out.println("no se pudo agregar");
         return false;
     }
     
