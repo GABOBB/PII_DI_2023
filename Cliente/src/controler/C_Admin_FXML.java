@@ -27,6 +27,7 @@ import model.Platillo;
 /**
  * FXML Controller class
  *
+ * Controlador para la interfaz gráfica
  * @author Gabriel
  */
 public class C_Admin_FXML implements Initializable {
@@ -34,74 +35,76 @@ public class C_Admin_FXML implements Initializable {
     
 //############################################main#######################################################################
     @FXML
-    private Button main_B;
+    private Button main_B; // Botón principal
     @FXML
-    private AnchorPane main_A_P;  
+    private AnchorPane main_A_P;  // Panel principal
+
 //######################administracion de usuarios############################################################    
     @FXML
-    private Button L_U_B;
+    private Button L_U_B; // Botón de administración de usuarios
     @FXML
-    private AnchorPane L_U_A_P;
+    private AnchorPane L_U_A_P; // Panel de administración de usuarios
     @FXML
-    private TableView<Admin> LD_t;//tabla de los administradores
+    private TableView<Admin> LD_t;// Tabla de los administradores
     @FXML
-    private TableColumn LD_c;//colubna de administradores
+    private TableColumn LD_c;// Colunma de administradores
     
-    private ObservableList<Admin> admins;
-    
-    @FXML
-    private TextField LD_u_tf;
-    @FXML
-    private TextField LD_c_tf;
+    private ObservableList<Admin> admins; // Lista observable de administradores
     
     @FXML
-    private Button new_admin_bt;
+    private TextField LD_u_tf; // Campo de texto para el nombre de usuario
     @FXML
-    private Button delet_admin_bt;
+    private TextField LD_c_tf; // Campo de texto para la ocntraseña
+    
     @FXML
-    private Button modificar_admin_bt;
+    private Button new_admin_bt; // Botón para agregar nuevo administrador
+    @FXML
+    private Button delet_admin_bt; // Botón para eliminar un administrador
+    @FXML
+    private Button modificar_admin_bt; // Botón para modificar un administrador
     
 //############################################Cola de Pedidos############################################################
     @FXML
-    private Button C_P_B;
+    private Button C_P_B; // Botón de la cola de pedidos
     @FXML
-    private AnchorPane C_P_A_P;
+    private AnchorPane C_P_A_P; // Panel de la cola de pedidos
     
-    private ObservableList<Platillo> pedidos_en_cola;
+    private ObservableList<Platillo> pedidos_en_cola; // Lista observable de pedidos en cola
     @FXML
-    private TableView<Platillo> cola_tv;
+    private TableView<Platillo> cola_tv; // Tabla de la cola de pedidios
     @FXML
-    private TableColumn cola_cv;
+    private TableColumn cola_cv; // Columns de la cola de pedidos
     @FXML
-    private Text cola_time_label;
+    private Text cola_time_label; // Etiqueta de tiempo de la cola de pedidos
+
 //############################################Menu#######################################################################
     @FXML
-    private Button M_B;
+    private Button M_B; // Botón del menú
     @FXML
-    private AnchorPane m_A_P;
+    private AnchorPane m_A_P; // Panel del menú
     
-    private ObservableList<Platillo> Menu_platillos_ol;
+    private ObservableList<Platillo> Menu_platillos_ol; // Lista observable de platillos en el menú
     @FXML
-    private TableView<Platillo> Menu_tv;
+    private TableView<Platillo> Menu_tv; // Tabla del menú
     @FXML
-    private TableColumn Menu_platillo_tc;
+    private TableColumn Menu_platillo_tc; // Columns de platillos del menú
     @FXML
-    private TextField Menu_id_tf;
+    private TextField Menu_id_tf; // Campo de texto para el ID del platillo
     @FXML
-    private TextField Menu_Precio_tf;
+    private TextField Menu_Precio_tf; // Campo de texto para el precio del platillo
     @FXML
-    private TextField Menu_Calorias_tf;
+    private TextField Menu_Calorias_tf; // Campo de texto para las calorías del platillo
     @FXML
-    private TextField Menu_TIempo_tf;
+    private TextField Menu_TIempo_tf; // Campo de texto para el tiempo 
     @FXML
-    private Button Menu_add_platillo_B;
+    private Button Menu_add_platillo_B; // Botón para agregar platillo en el menú
     @FXML
-    private Button Menu_delete_platillo_B;
+    private Button Menu_delete_platillo_B; // Botón para modificar platillo en el menú
     @FXML
     private Button Menu_Modificar_platillo_B;
 //############################################LOG OUT####################################################################
     @FXML
-    private Button Log_OUT;
+    private Button Log_OUT; // Botón para cerrar sesión
     
 
     
@@ -110,21 +113,21 @@ public class C_Admin_FXML implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.main_A_P.setVisible(true);
-        this.C_P_A_P.setVisible(false);
-        this.L_U_A_P.setVisible(false);
-        this.m_A_P.setVisible(false);
+        this.main_A_P.setVisible(true); // Configuración de visibilidad para la interfaz principal
+        this.C_P_A_P.setVisible(false); // Configuración de visibilidad para la cola de pedidos
+        this.L_U_A_P.setVisible(false); // Configuración de visibilidad para la administración de usuarios
+        this.m_A_P.setVisible(false); // Configuración de visibilidad para el menú
         
         
     //######################administracion de usuarios############################################################
-        this.admins = FXCollections.observableArrayList();
-        this.LD_c.setCellValueFactory(new PropertyValueFactory("user"));
+        this.admins = FXCollections.observableArrayList(); // Lista observable de administradores
+        this.LD_c.setCellValueFactory(new PropertyValueFactory("user")); // Configuración de la propiedad de celda para la tabla de administradores
     //######################cola de pedidos############################################################
-        this.pedidos_en_cola = FXCollections.observableArrayList();
-        this.cola_cv.setCellValueFactory(new PropertyValueFactory("id"));
+        this.pedidos_en_cola = FXCollections.observableArrayList(); // Lista observable de pedidos en cola
+        this.cola_cv.setCellValueFactory(new PropertyValueFactory("id")); // Configuración de la propiedad de celda para la tabla de cola de pedidos
     //######################platillos en el menu#####################################################################
-        this.Menu_platillos_ol = FXCollections.observableArrayList();
-        this.Menu_platillo_tc.setCellValueFactory(new PropertyValueFactory("id"));
+        this.Menu_platillos_ol = FXCollections.observableArrayList(); // Lista observable de platillos en el menú
+        this.Menu_platillo_tc.setCellValueFactory(new PropertyValueFactory("id")); // Configuración de la propiedad de celda para la tabla de platillos en el menú
     }    
 
 
@@ -135,37 +138,35 @@ public class C_Admin_FXML implements Initializable {
     private void A_P_selector(ActionEvent e) {
         if(main_B==e.getSource()){
             
-            this.main_A_P.setVisible(true);
-            this.C_P_A_P.setVisible(false);
-            this.L_U_A_P.setVisible(false);
-            this.m_A_P.setVisible(false);
+            this.main_A_P.setVisible(true); // Mostrar interfaz principal
+            this.C_P_A_P.setVisible(false); // Ocultar cola de pedidos
+            this.L_U_A_P.setVisible(false); // Ocultar administración de usuarios
+            this.m_A_P.setVisible(false); // Ocultar menú
             
         }else if(L_U_B==e.getSource()){
             
-            this.load_L_U(Cliente.send("lista de administradores").split("###"));
-            this.main_A_P.setVisible(false);
-            this.C_P_A_P.setVisible(false);
-            this.L_U_A_P.setVisible(true);
-            this.m_A_P.setVisible(false);
-            
-            
+            this.load_L_U(Cliente.send("lista de administradores").split("###"));  // Cargar lista de administradores desde el servidor
+            this.main_A_P.setVisible(false); // Ocultar interfaz principal
+            this.C_P_A_P.setVisible(false); // Ocultar cola de pedidos
+            this.L_U_A_P.setVisible(true); // Mostrar administración de usuarios
+            this.m_A_P.setVisible(false); // Ocultar menú
             
             
         }else if(C_P_B==e.getSource()){
             
-            this.load_pedidos();
-            this.main_A_P.setVisible(false);
-            this.C_P_A_P.setVisible(true);
-            this.L_U_A_P.setVisible(false);
-            this.m_A_P.setVisible(false);   
+            this.load_pedidos(); // Cargar pedidos desde el servidor
+            this.main_A_P.setVisible(false); // Ocultar interfaz principal
+            this.C_P_A_P.setVisible(true); // Mostrar cola de pedidos
+            this.L_U_A_P.setVisible(false); // Ocultar administración de usuarios
+            this.m_A_P.setVisible(false); // Ocultar menú
         
         }else if(M_B == e.getSource()){
         
-            load_Menu();
-            this.main_A_P.setVisible(false);
-            this.C_P_A_P.setVisible(false);
-            this.L_U_A_P.setVisible(false);
-            this.m_A_P.setVisible(true);
+            load_Menu();  // Cargar menú desde el servidor
+            this.main_A_P.setVisible(false);  // Ocultar interfaz principal
+            this.C_P_A_P.setVisible(false); // Ocultar cola de pedidos
+            this.L_U_A_P.setVisible(false);// Ocultar administración de usuarios
+            this.m_A_P.setVisible(true); // Mostrar menú
             
         }
     }
