@@ -29,3 +29,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
     </admin>
 </root>
 
+<admin><user>Juan</user><password>123</password></admin>
