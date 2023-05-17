@@ -18,7 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
- *
+ *  esta clase se encarga de iniciar el programa
  * @author Gabriel
  */
 public class Cliente extends Application {

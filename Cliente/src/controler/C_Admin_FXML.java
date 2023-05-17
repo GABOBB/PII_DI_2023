@@ -205,7 +205,7 @@ public class C_Admin_FXML implements Initializable {
             Admin a = new Admin(t.split(";")[0],t.split(";")[1]);
             admins.add(a);
         }
-        this.LD_t.setItems(admins);); // Actualiza los elementos mostrados en la tabla de administradores
+        this.LD_t.setItems(admins); // Actualiza los elementos mostrados en la tabla de administradores
     }
     
     private void show_admin(String u, String p){

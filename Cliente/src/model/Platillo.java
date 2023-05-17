@@ -7,7 +7,7 @@ package model;
 import java.util.Objects;
 
 /**
- *
+ *  esta clase funciona para almacenar los platillos 
  * @author Gabriel
  */
 public class Platillo {

@@ -7,7 +7,7 @@ package model;
 import java.util.Objects;
 
 /**
- *
+ *esta clase funciona para guardar los usuarios adminoistradores
  * @author Gabriel
  */
 public class Admin {

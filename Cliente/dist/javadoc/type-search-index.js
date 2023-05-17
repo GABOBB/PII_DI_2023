@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"model","l":"Admin"},{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"controler","l":"C_Admin_FXML"},{"p":"controler","l":"C_Client_FXML"},{"p":"controler","l":"C_Login_FXML"},{"p":"controler","l":"Cliente"},{"p":"model","l":"Platillo"}];updateSearchResults();
