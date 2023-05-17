@@ -89,6 +89,15 @@ public class L_d_e {
         }
         return current;
     }
+    
+    public N_d_e searchPos(int pos){
+        N_d_e current = first;
+        int i=0;
+        while (i<pos) {
+            current = current.getN();
+        }
+        return current;
+    }
 
     public N_d_e getFirst() {
         return first;

@@ -5,6 +5,8 @@
 
 package com.mycompany.servidor;
 
+import java.io.BufferedWriter;
+import java.io.FilterWriter;
 import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,6 +16,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -120,9 +123,28 @@ public class Servidor {
         }
     } 
     
+    public void actualizarXML(L_d_e lista) throws IOException{
+        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/servidor/Admins.xml",true));
+        writer.write("<root>");
+        for(int i=0;i<lista.getSize();i++){
+            Admin admn=(Admin)lista.searchPos(i).getData();
+            String nuevalinea= "<admin><user>"+admn.getU()+"</user><password>"+admn.getP()+"</password></admin>";
+            writer.write(nuevalinea);
+        }
+        writer.write("</root>");
+        
+        
+        writer.close();
+    
+    }
+    
     public void load_Platillos(){
         //String JSON = leer("src/main/java/com/mycompany/servidor/Platillos.json");
         
+      
+    }
+    
+    public void actualizarJson(L_d_e lista){
         
     }
     
@@ -181,9 +203,9 @@ public class Servidor {
                         
                         N_B_B N = new N_B_B(u,a);
                         this.admns.add_N(N);
-                        
                     }
                     this.admns.getList().prntL();
+                    actualizarXML(this.admns.getList());
                     out.writeUTF(this.admns.get_eA());
                 }else if(message.equals("get_pedidos")){
                     if(this.pedidos.getSize()>0){
@@ -226,6 +248,7 @@ public class Servidor {
                                                   Integer.parseInt(info[3]));
                             N_AVL new_nodo = new N_AVL(info[0],P);
                             this.platillos.insertar(new_nodo);
+                            actualizarJson(this.platillos.getElements());
                         }
                     }
                 }else if(message.equals("get_platillos")){
