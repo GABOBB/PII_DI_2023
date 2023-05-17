@@ -13,25 +13,25 @@ import java.util.Objects;
 public class Admin {
     String user;
     String pssw;
-
+// Crea un nuevo objeto Admin con el usuario y la contraseña proporcionados.
     public Admin(String user, String pssw) {
         this.user = user;
         this.pssw = pssw;
     }
 
-    public String getUser() {
+    public String getUser() { //Devuelve el nombre de usuario del administrador
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(String user) { // Establece el nombre de usuario del administrador.
         this.user = user;
     }
 
-    public String getPssw() {
+    public String getPssw() { // Devuelve la contraseña del administrador.
         return pssw;
     }
 
-    public void setPssw(String pssw) {
+    public void setPssw(String pssw) { // Establece la contraseña del administrador.
         this.pssw = pssw;
     }
 
@@ -43,6 +43,8 @@ public class Admin {
 
     @Override
     public boolean equals(Object obj) {
+        //Compara este objeto Admin con otro objeto para determinar si son iguales.
+        //Dos objetos Admin son iguales si tienen el mismo nombre de usuario.
         if (this == obj) {
             return true;
         }

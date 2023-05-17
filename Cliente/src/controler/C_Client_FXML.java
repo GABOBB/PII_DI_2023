@@ -25,12 +25,15 @@ import model.Platillo;
 
 /**
  * FXML Controller class
- *
+ * 
+ * Controlador de la interfaz de usuario del cliente
+ * 
  * @author Gabriel
  */
 public class C_Client_FXML implements Initializable {
     private Stage stg;
-    
+    // Paneles y botones de la interfaz
+
 //##############################################Main############################################################
     @FXML
     private AnchorPane Main_AP;
@@ -107,19 +110,22 @@ public class C_Client_FXML implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        // Se configuran las visibilidades iniciales de los paneles
         this.Main_AP.setVisible(true);
         this.hacer_pedidos_AP.setVisible(false);
         this.Pedidos_Activos_AP.setVisible(false);
         this.Historial_Pedidos_AP.setVisible(false);
         
         //##########################################hacer pedidos###############################################
+        // Se inicializa la lista de platillos añadidos al pedido y se configura la propiedad de la columna
         this.pedir_platillos_anadidos = FXCollections.observableArrayList();
         this.pedir_c_platillos_tc.setCellValueFactory(new PropertyValueFactory("id"));
         //##########################################activos#####################################################
+        // Se inicializa la lista de platillos activos y se configura la propiedad de la columna
         this.activos_ol = FXCollections.observableArrayList();
         this.activos_TC.setCellValueFactory(new PropertyValueFactory("id"));
         //##########################################historial###################################################
+        // Se inicializa la lista de platillos en el historial y se configura la propiedad de la columna
         this.historial_ol = FXCollections.observableArrayList();
         this.historial_tc.setCellValueFactory(new PropertyValueFactory("id"));
     }    
@@ -130,14 +136,14 @@ public class C_Client_FXML implements Initializable {
     @FXML
     private void select_window(ActionEvent e) {
         if(e.getSource() == this.B_main){
-            
+            // Mostrar panel principal y ocultar los demás
             this.Main_AP.setVisible(true);
             this.hacer_pedidos_AP.setVisible(false);
             this.Pedidos_Activos_AP.setVisible(false);
             this.Historial_Pedidos_AP.setVisible(false);
         
         }else if(e.getSource() == this.B_realizar_pedidos){
-        
+            // Cargar platillos disponibles, mostrar panel de realizar pedidos y ocultar los demás
             this.loadPlatillos();
             this.Main_AP.setVisible(false);
             this.hacer_pedidos_AP.setVisible(true);
@@ -145,7 +151,7 @@ public class C_Client_FXML implements Initializable {
             this.Historial_Pedidos_AP.setVisible(false);
             
         }else if(e.getSource() == this.B_pedidos_activos){
-        
+            // Cargar pedidos activos, mostrar panel de pedidos activos y ocultar los demás
             this.loadActivos();
             this.Main_AP.setVisible(false);
             this.hacer_pedidos_AP.setVisible(false);
@@ -153,7 +159,7 @@ public class C_Client_FXML implements Initializable {
             this.Historial_Pedidos_AP.setVisible(false);
             
         }else if(e.getSource() == this.B_historial){
-            
+            // Cargar historial de pedidos, mostrar panel de historial y ocultar los demás
             this.loadHistorial();
             this.Main_AP.setVisible(false);
             this.hacer_pedidos_AP.setVisible(false);
@@ -168,12 +174,15 @@ public class C_Client_FXML implements Initializable {
     
     
 //##############################################Realizar Pedidos################################################
+// Carga la lista de platillos disponibles desde el servidor
     public void loadPlatillos(){
         try{
-        this.pedir_CB_platillos.getItems().clear();
+        // Se limpia la lista desplegable de platillos
+            this.pedir_CB_platillos.getItems().clear();
         String PLATILLOS = Cliente.send("get_platillos");
             System.out.println(PLATILLOS);
                 if(PLATILLOS != null){
+                    // Se obtiene la lista de platillos desde el servidor
                     String Platillos = PLATILLOS.substring(3);
                     String platillos[] = Platillos.split("###");
 
@@ -198,6 +207,7 @@ public class C_Client_FXML implements Initializable {
     private void pedir_seleccionar_platillo(ActionEvent event) {
         Platillo p = this.pedir_CB_platillos.getValue();
         if(p!=null){
+            // Se establecen los valores correspondientes al platillo seleccionado
             this.pedir_Nomnbre_pedido_tf.setText(p.getId());
             this.pedir_precio_pedido_tf.setText("$"+p.getPrecio());
             this.pedir_calorias_pedido_tf.setText(p.getCalorias()+"cal");
@@ -217,6 +227,7 @@ public class C_Client_FXML implements Initializable {
     private void pedir_eliminar_platillo(ActionEvent event) {
         Platillo p = this.pedir_Lista_de_pedidos_act_tv.getSelectionModel().getSelectedItem();
         if(this.pedir_platillos_anadidos.contains(p)){
+            // Se elimina el platillo seleccionado de la lista de platillos añadidos al pedido
             this.pedir_platillos_anadidos.remove(p);
             this.pedir_Lista_de_pedidos_act_tv.refresh();
             this.pedir_Nomnbre_pedido_tf.setText(null);
@@ -224,6 +235,7 @@ public class C_Client_FXML implements Initializable {
             this.pedir_precio_pedido_tf.setText(null);
             this.pedir_tiempo_pedido_tf.setText(null);
         }else{
+            // Muestra alerta de error por error en los datos
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setTitle("Error en los datos");
@@ -250,6 +262,7 @@ public class C_Client_FXML implements Initializable {
 
 //##############################################Pedidos Activos#################################################
     private void loadActivos(){
+        // Carga la lista de pedidos activos desde el servidor
         this.activos_ol.clear();
         String PEDIDOS_ACTIVOS = Cliente.send("get_activos");
         if(PEDIDOS_ACTIVOS.equals("")){return;}
@@ -266,6 +279,7 @@ public class C_Client_FXML implements Initializable {
 
 //##############################################Historial#######################################################
     private void loadHistorial() {
+        //Carga el historial de pedidos desde el servidor
         this.historial_ol.clear();
         String historial = Cliente.send("get_historial");
         if(!historial.equals("")){
@@ -285,6 +299,7 @@ public class C_Client_FXML implements Initializable {
 //##############################################log_OUT#33333333333333333333333333333333333333333333333333333####
     @FXML
     public void closeTab(){
+        // Cierra la sesión actual y muestra la ventana de inicio de sesión
         try{
            FXMLLoader loader = new FXMLLoader(getClass().getResource("/visual/login_FXML.fxml"));
 

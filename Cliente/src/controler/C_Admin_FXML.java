@@ -194,16 +194,18 @@ public class C_Admin_FXML implements Initializable {
 
 //###########################################metodos de lista de usuarios##############################################################
     private void load_L_U(String as[]){
-        this.LD_u_tf.setText(null);
-        this.LD_c_tf.setText(null);
-        this.admins.clear();
-        this.LD_t.setItems(admins);
+        this.LD_u_tf.setText(null);// Limpia el campo de texto para el nombre de usuario
+        this.LD_c_tf.setText(null); // Limpia el campo de texto para la contraseña
+        this.admins.clear(); // Limpia la lista de administradores
+        this.LD_t.setItems(admins); // Actualiza los elementos mostrados en la tabla de administradores
+        // Itera sobre el arreglo de administradores recibido
         for(int i=1; i<as.length; i++){
             String t = as[i];
+            // Divide el string en nombre de usuario y contraseña y crea un objeto Admin
             Admin a = new Admin(t.split(";")[0],t.split(";")[1]);
             admins.add(a);
         }
-        this.LD_t.setItems(admins);
+        this.LD_t.setItems(admins);); // Actualiza los elementos mostrados en la tabla de administradores
     }
     
     private void show_admin(String u, String p){

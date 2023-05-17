@@ -11,6 +11,7 @@ import java.util.Objects;
  * @author Gabriel
  */
 public class Platillo {
+    //Contiene información sobre el ID del usuario que lo creó, el ID del platillo,las calorías, el tiempo de preparación y el precio del platillo.
     private String id;
     private String id_user;
     private int calorias;
@@ -18,6 +19,7 @@ public class Platillo {
     private int precio;
     
     public Platillo(String id_u, String id, int c, int t, int p){
+        // Crea un nuevo objeto Platillo con el ID de usuario, ID de platillo, calorías, tiempo de preparación y precio proporcionados.
         this.id_user = id_u;
         this.id = id;
         this.calorias = c;
@@ -33,13 +35,14 @@ public class Platillo {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() { //Genera el código hash del objeto Platillo.
         int hash = 3;
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) { 
+        //Compara este objeto Platillo con otro objeto para determinar si son iguales.
         if (this == obj) {
             return true;
         }
@@ -61,16 +64,16 @@ public class Platillo {
         }
         return Objects.equals(this.id, other.id);
     }
-    public void setIdu(String idu){this.id_user = idu;}
-    public void setId(String id){this.id = id;}
-    public void setTiempo(int tiempo){this.tiempo = tiempo;}
-    public void setPrecio(int precio){this.precio = precio;}
-    public void setCalorias(int calorias){this.calorias = calorias;}
+    public void setIdu(String idu){this.id_user = idu;}// Establece el ID del usuario que creó el platillo
+    public void setId(String id){this.id = id;}//Establece el ID del platillo
+    public void setTiempo(int tiempo){this.tiempo = tiempo;}//Establece el tiempo de preparación del platillo.
+    public void setPrecio(int precio){this.precio = precio;}//Establece el precio del platillo.
+    public void setCalorias(int calorias){this.calorias = calorias;}//Establece las calorías del platillo.
     
-    public String getIdu(){return this.id_user;}
-    public String getId(){return this.id;}
-    public int getTiempo(){return this.tiempo;}
-    public int getPrecio(){return this.precio;}
-    public int getCalorias(){return this.calorias;}
+    public String getIdu(){return this.id_user;}//Devuelve el ID del usuario que creó el platillo.
+    public String getId(){return this.id;}//Devuelve el ID del platillo.
+    public int getTiempo(){return this.tiempo;}//Devuelve el tiempo de preparación del platillo.
+    public int getPrecio(){return this.precio;}//Devuelve el precio del platillo.
+    public int getCalorias(){return this.calorias;}//Devuelve las calorías del platillo.
   
 }

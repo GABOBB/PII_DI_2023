@@ -28,6 +28,11 @@ public class Cliente extends Application {
     
     }
    @Override
+   /**
+ * Método start
+ * Carga la ventana de inicio de sesión, establece la etapa (stage) y muestra la ventana.
+ * También envía un mensaje al servidor.
+ */
     public void start(Stage pstage){
         try{
             FXMLLoader loader = new FXMLLoader();
@@ -52,11 +57,20 @@ public class Cliente extends Application {
 
     /**
      * @param args the command line arguments
+     * 
+     *  Método main
+     * Punto de entrada para la ejecución de la aplicación.
      */
-    public static void main(String[] args) {
+
+     public static void main(String[] args) {
         launch(args);
     }
     
+    /**
+     * Método send
+     * Envía un mensaje al servidor y espera la respuesta.
+     * Utiliza un socket para establecer la conexión con el servidor y enviar y recibir datos.
+     */
     public static String send(String a){
         final String HOST = "127.0.0.1";
         final int PORT = 5000;
