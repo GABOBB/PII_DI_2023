@@ -32,9 +32,12 @@ public class Cola {
     }
     
     public N_d_e pop(){
-        N_d_e temp = this.elements.getFirst();
-        this.elements.remove_first();
-        return temp;
+        if(this.elements.getSize()>0){
+            N_d_e temp = this.elements.getFirst();
+            this.elements.remove_first();
+            return temp;
+        }
+        return null;
     }
     
     public String get_elemts(){

@@ -95,6 +95,7 @@ public class L_d_e {
         int i=0;
         while (i<pos) {
             current = current.getN();
+            i++;
         }
         return current;
     }

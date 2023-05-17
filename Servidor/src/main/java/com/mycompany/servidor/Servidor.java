@@ -130,22 +130,28 @@ public class Servidor {
     } 
     
     public void actualizarXML(L_d_e lista) throws IOException{
-        /*BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/servidor/Admins.xml",true));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/servidor/Admins.xml"));
         writer.write("<root>");
         for(int i=0;i<lista.getSize();i++){
-        Admin admn=(Admin)lista.searchPos(i).getData();
-        String nuevalinea= "<admin><user>"+admn.getU()+"</user><password>"+admn.getP()+"</password></admin>";
-        writer.write(nuevalinea);
+            Admin admn=(Admin)lista.searchPos(i).getData();
+            String nuevalinea= "<admin><user>"+admn.getU()+"</user><password>"+admn.getP()+"</password></admin>";
+            writer.write(nuevalinea);
         }
         writer.write("</root>");
         
         
-        writer.close();*/
+        writer.close();
+    
     
     }
     
     public void load_Platillos(){
-        //String JSON = leer("src/main/java/com/mycompany/servidor/Platillos.json");
+        //JSONObject ob= new JSONObject("src\\cmain\\java\\com\\mycompany\\servidor\\Platillos.json");
+        //JSONArray arr= (JSONArray)ob.get("platillos");
+        //for(int i =0;i<arr.sixe();i++){
+        //  JSONObject platillo = arr.get(i);
+        //  añadir platillo al arbol
+                
         
       
     }
