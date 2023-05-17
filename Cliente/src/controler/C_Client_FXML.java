@@ -250,8 +250,9 @@ public class C_Client_FXML implements Initializable {
 
 //##############################################Pedidos Activos#################################################
     private void loadActivos(){
+        this.activos_ol.clear();
         String PEDIDOS_ACTIVOS = Cliente.send("get_activos");
-        if(PEDIDOS_ACTIVOS==null){return;}
+        if(PEDIDOS_ACTIVOS.equals("")){return;}
         PEDIDOS_ACTIVOS = PEDIDOS_ACTIVOS.substring(3);
         String P_A[] = PEDIDOS_ACTIVOS.split("###");
         for(String p : P_A){
@@ -265,19 +266,20 @@ public class C_Client_FXML implements Initializable {
 
 //##############################################Historial#######################################################
     private void loadHistorial() {
+        this.historial_ol.clear();
         String historial = Cliente.send("get_historial");
-        if(historial == null){return;}
-        
-        historial = historial.substring(3);
-        
-        String HS[] = historial.split("###");
-        for(String hs : HS){
-            Platillo NEW_P = new Platillo(hs.split(";")[0],Integer.parseInt(hs.split(";")[1]),
-                                                          Integer.parseInt(hs.split(";")[2]),
-                                                          Integer.parseInt(hs.split(";")[3]));
-            this.historial_ol.add(NEW_P);
+        if(!historial.equals("")){
+            historial = historial.substring(3);
+
+            String HS[] = historial.split("###");
+            for(String hs : HS){
+                Platillo NEW_P = new Platillo(hs.split(";")[0],Integer.parseInt(hs.split(";")[1]),
+                                                              Integer.parseInt(hs.split(";")[2]),
+                                                              Integer.parseInt(hs.split(";")[3]));
+                this.historial_ol.add(NEW_P);
+            }
+            this.historial_tv.setItems(historial_ol);
         }
-        this.historial_tv.setItems(historial_ol);
     }
     
 //##############################################log_OUT#33333333333333333333333333333333333333333333333333333####
