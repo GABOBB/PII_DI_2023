@@ -36,6 +36,7 @@ import model.Platillo;
  * @author Gabriel
  */
 public class Servidor {
+    Arduino ARDUINO;
     A_B_B admns;
     A_B_B clnts;
     A_AVL platillos;
@@ -44,6 +45,11 @@ public class Servidor {
     Cliente usruario;
     
     public Servidor(){
+        try{
+            this.ARDUINO = new Arduino();
+        }catch(Exception e){
+            System.out.println("hubo un problema con el arduino :(");
+        }
         try{
             this.admns = new A_B_B("admns");
             this.clnts = new A_B_B("clnts");
@@ -208,6 +214,13 @@ public class Servidor {
                             this.pedidos.push(P.split(";")[0], NEW_P);
                           
                         }
+                        int cantidad = this.pedidos.getSize();
+                        if(cantidad<10){
+                            this.ARDUINO.send_s("N0"+cantidad+"\n");
+                        }else{
+                            this.ARDUINO.send_s("N"+cantidad+"\n");
+                        }
+                        
                         System.out.println("@@@");
                         System.out.println(this.pedidos.get_elemts());
                         System.out.println("@@@");
