@@ -39,7 +39,7 @@
             </Button>
          </children>
       </VBox>
-      <AnchorPane fx:id="main_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #111111;" visible="false">
+      <AnchorPane fx:id="main_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #111111;">
          <children>
             <Text fill="#00c3ff" layoutX="124.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Table Tech" wrappingWidth="219.0">
                <font>
@@ -60,9 +60,16 @@
                   <Font size="17.0" />
                </font>
             </Text>
+            <Button fx:id="S1_bt" layoutX="29.0" layoutY="343.0" mnemonicParsing="false" onAction="#arduino_prueva" text="sonido 1" />
+            <Button fx:id="S2_bt" layoutX="109.0" layoutY="343.0" mnemonicParsing="false" onAction="#arduino_prueva" text="sonido 2" />
+            <Button fx:id="c25" layoutX="253.0" layoutY="343.0" mnemonicParsing="false" onAction="#arduino_prueva" prefHeight="25.0" prefWidth="33.0" text="25" />
+            <Button fx:id="c50" layoutX="293.0" layoutY="343.0" mnemonicParsing="false" onAction="#arduino_prueva" prefHeight="25.0" prefWidth="33.0" text="50" />
+            <Button fx:id="c75" layoutX="331.0" layoutY="343.0" mnemonicParsing="false" onAction="#arduino_prueva" text="75" />
+            <Button fx:id="c100" layoutX="370.0" layoutY="343.0" mnemonicParsing="false" onAction="#arduino_prueva" text="100" />
+            <Button fx:id="cero_bt" layoutX="222.0" layoutY="343.0" mnemonicParsing="false" onAction="#arduino_prueva" text="0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="L_U_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #444444;">
+      <AnchorPane fx:id="L_U_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #444444;" visible="false">
          <children>
             <Text fill="#00c3ff" layoutX="19.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de usuarios" wrappingWidth="256.0">
                <font>
@@ -100,7 +107,7 @@
             <AnchorPane layoutX="272.0" layoutY="14.0" prefHeight="51.0" prefWidth="193.0" style="-fx-background-color: #444444;" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="C_P_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #333333;">
+      <AnchorPane fx:id="C_P_A_P" layoutX="124.0" prefHeight="405.0" prefWidth="477.0" style="-fx-background-color: #333333;" visible="false">
          <children>
             <Text fill="#00c3ff" layoutX="11.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cola de Pedidos">
                <font>

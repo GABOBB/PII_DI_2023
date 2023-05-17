@@ -105,6 +105,20 @@ public class C_Admin_FXML implements Initializable {
 //############################################LOG OUT####################################################################
     @FXML
     private Button Log_OUT; // Botón para cerrar sesión
+    @FXML
+    private Button S1_bt;
+    @FXML
+    private Button S2_bt;
+    @FXML
+    private Button c25;
+    @FXML
+    private Button c50;
+    @FXML
+    private Button c75;
+    @FXML
+    private Button c100;
+    @FXML
+    private Button cero_bt;
     
 
     
@@ -283,10 +297,6 @@ public class C_Admin_FXML implements Initializable {
                 alert.showAndWait();  
             }
 
-            
-            
-            
-        
         }
     }
 
@@ -340,8 +350,9 @@ public class C_Admin_FXML implements Initializable {
 
 //##########################################metodos del menu############################################################################   
     private void load_Menu(){
+        this.Menu_platillos_ol.clear();
         String PLATILLOS = Cliente.send("get_platillos");
-        if(PLATILLOS != null){
+        if(!PLATILLOS.equals("")){
             String aux[] = PLATILLOS.split("###");
             String platillos[] = new String[aux.length-1];
             System.arraycopy(aux, 1, platillos, 0, platillos.length);
@@ -510,6 +521,32 @@ public class C_Admin_FXML implements Initializable {
     }
     
     public void set_stage(Stage e){this.stg = e;}
+
+    @FXML
+    private void arduino_prueva(ActionEvent e) {
+        if(e.getSource()==this.S1_bt){
+            System.out.println(e);
+            Cliente.send("arduino;s");
+        }else if(e.getSource()==this.S2_bt){
+            System.out.println(e);
+            Cliente.send("arduino;S");
+        }else if(e.getSource()==this.cero_bt){
+            System.out.println(e);
+            Cliente.send("arduino;0");
+        }else if(e.getSource()==this.c25){
+            System.out.println(e);
+            Cliente.send("arduino;25");
+        }else if(e.getSource()==this.c50){
+            System.out.println(e);
+            Cliente.send("arduino;50");
+        }else if(e.getSource()==this.c75){
+            System.out.println(e);
+            Cliente.send("arduino;75");
+        }else if(e.getSource()==this.c100){
+            System.out.println(e);
+            Cliente.send("arduino;100");
+        }
+    }
 
 
 

@@ -130,17 +130,17 @@ public class Servidor {
     } 
     
     public void actualizarXML(L_d_e lista) throws IOException{
-        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/servidor/Admins.xml",true));
+        /*BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/servidor/Admins.xml",true));
         writer.write("<root>");
         for(int i=0;i<lista.getSize();i++){
-            Admin admn=(Admin)lista.searchPos(i).getData();
-            String nuevalinea= "<admin><user>"+admn.getU()+"</user><password>"+admn.getP()+"</password></admin>";
-            writer.write(nuevalinea);
+        Admin admn=(Admin)lista.searchPos(i).getData();
+        String nuevalinea= "<admin><user>"+admn.getU()+"</user><password>"+admn.getP()+"</password></admin>";
+        writer.write(nuevalinea);
         }
         writer.write("</root>");
         
         
-        writer.close();
+        writer.close();*/
     
     }
     
@@ -171,6 +171,7 @@ public class Servidor {
             System.out.println("Server is On!");
 
             while (true) {
+                
                 clientSocket = serverSocket.accept();
                 System.out.println("Client Connected");
 
@@ -182,6 +183,30 @@ public class Servidor {
                 if(message.equals("hola server")){
                     out.writeUTF("Hola Cliente");
                     
+                }else if(message.contains("arduino")){
+                    String c = message.split(";")[1];
+                    if(c.equals("s")){
+                        this.ARDUINO.send_s("s1\n");
+                        System.out.println(c+"1" );
+                    }else if(c.equals("S")){
+                        this.ARDUINO.send_s("s2\n");
+                        System.out.println(c+"2" );
+                    }else if(c.equals("0")){
+                        this.ARDUINO.send_s("0\n");
+                        System.out.println(c+"3" );
+                    }else if(c.equals("25")){
+                        this.ARDUINO.send_s("25\n");
+                        System.out.println(c+"4" );
+                    }else if(c.equals("50")){
+                        this.ARDUINO.send_s("50\n");
+                        System.out.println(c+"5" );
+                    }else if(c.equals("75")){
+                        this.ARDUINO.send_s("75\n");
+                        System.out.println(c+"6" );
+                    }else if(c.equals("100")){
+                        this.ARDUINO.send_s("100\n");
+                        System.out.println(c+"7" );
+                    }
                     
                 }else if(message.startsWith("Buscar")){
                     String u=message.split(" ")[1];
@@ -238,6 +263,7 @@ public class Servidor {
                         }
                         int cantidad = this.pedidos.getSize();
                         if(cantidad<10){
+                            //this.ARDUINO.send_s("s1\n");
                             this.ARDUINO.send_s("N0"+cantidad+"\n");
                         }else{
                             this.ARDUINO.send_s("N"+cantidad+"\n");
